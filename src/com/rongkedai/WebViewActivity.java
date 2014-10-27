@@ -17,13 +17,12 @@ import android.webkit.WebSettings.RenderPriority;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageButton;
 
 public class WebViewActivity extends Activity
 {
     private WebView mWebView;
 
-    private ImageButton btnBack,btnReload;
+    // private ImageButton btnBack,btnReload;
 
     private static final String LOG_TAG="WebViewActivity";
 
