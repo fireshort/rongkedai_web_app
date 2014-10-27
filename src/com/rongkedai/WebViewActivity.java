@@ -2,7 +2,6 @@ package com.rongkedai;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -244,11 +243,8 @@ public class WebViewActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         this.initSettings();
-        Intent intent=getIntent();
         String url="https://www.rongkedai.com/wapborrow/nav.jhtml";// intent.getStringExtra("url");
-
         Log.d("bms",url);
-
         String htmlText="<html>"+"<head>"+"<style type=\"text/css\">"+".abmenutt{display:none;}"+"</style>"+"</head>";
         mWebView.loadData(htmlText,"text/html","utf-8");
         // mWebView.loadUrl("javascript:document.getElementsByClassName('abmenutt')[0].style.display = 'none';");
