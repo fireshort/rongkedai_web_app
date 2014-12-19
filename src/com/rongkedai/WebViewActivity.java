@@ -14,15 +14,17 @@ import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.RenderPriority;
+import android.webkit.WebSettings.ZoomDensity;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 
 public class WebViewActivity extends Activity
 {
     private WebView mWebView;
 
-    // private ImageButton btnBack,btnReload;
+    private ImageButton btnBack,btnRefresh,btnHome,btnSignIn,btnNotice,btnBorrow,btnAccount;
 
     private static final String LOG_TAG="WebViewActivity";
 
@@ -42,7 +44,7 @@ public class WebViewActivity extends Activity
         {
             WebViewActivity.this.setProgressBarIndeterminateVisibility(false);
             super.onPageFinished(view,url);
-            String javascript="javascript:document.getElementById('box').style.display = 'none';javascript:document.getElementsByClassName('numberdiv')[0].style.display = 'none';javascript:document.getElementsByClassName('footertopmy')[0].style.display = 'none';javascript:document.getElementsByClassName('topmain')[0].style.display = 'none';document.getElementsByClassName('abmenutt')[0].style.display = 'none';";
+            String javascript="javascript:document.getElementsByTagName('footer')[0].style.display = 'none';javascript:document.getElementsByClassName('header')[0].style.display = 'none';javascript:document.getElementsByClassName('banner')[0].style.display = 'none';void(0)";
             view.loadUrl(javascript);
         }
 
@@ -207,12 +209,12 @@ public class WebViewActivity extends Activity
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         // Àı∑≈÷ß≥÷
         webSettings.setBuiltInZoomControls(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setDisplayZoomControls(true);
+        webSettings.setDefaultZoom(ZoomDensity.FAR);
 
         webSettings.setUseWideViewPort(true);
         webSettings.setLoadWithOverviewMode(true);
-
-        // webSettings.setDefaultZoom(ZoomDensity.FAR);
-        // webSettings.setSupportZoom(false);
 
         mWebView.setWebChromeClient(mChromeClient);
         mWebView.setWebViewClient(mWebViewClient);
@@ -226,14 +228,58 @@ public class WebViewActivity extends Activity
         // finish();
         // }
         // });
-        // btnReload=(ImageButton)findViewById(R.id.btnReload);
-        // btnReload.setOnClickListener(new View.OnClickListener()
-        // {
-        // public void onClick(View v)
-        // {
-        // mWebView.reload();
-        // }
-        // });
+        btnRefresh=(ImageButton)findViewById(R.id.btnRefresh);
+        btnRefresh.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                mWebView.reload();
+            }
+        });
+        btnHome=(ImageButton)findViewById(R.id.btnHome);
+        btnHome.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                mWebView.loadUrl("https://www.rongkedai.com/wapborrow/nav.jhtml");
+            }
+        });
+
+        btnSignIn=(ImageButton)findViewById(R.id.btnSignIn);
+        btnSignIn.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                mWebView.loadUrl("https://www.rongkedai.com/wap/sign/signList.jhtml");
+            }
+        });
+
+        btnNotice=(ImageButton)findViewById(R.id.btnNotice);
+        btnNotice.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                mWebView.loadUrl("https://www.rongkedai.com/mobile/wap/newsNotices/BorrowNotice.jsp");
+            }
+        });
+
+        btnBorrow=(ImageButton)findViewById(R.id.btnBorrow);
+        btnBorrow.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                mWebView.loadUrl("https://www.rongkedai.com/mobile/wap/borrow/index.jsp");
+            }
+        });
+
+        btnAccount=(ImageButton)findViewById(R.id.btnAccount);
+        btnAccount.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                mWebView.loadUrl("https://www.rongkedai.com/wapaccount/intoMyAccount.jhtml");
+            }
+        });
 
     }
 
@@ -244,8 +290,9 @@ public class WebViewActivity extends Activity
         this.initSettings();
         String url="https://www.rongkedai.com/wapborrow/nav.jhtml";// intent.getStringExtra("url");
         Log.d("bms",url);
-        String htmlText="<html>"+"<head>"+"<style type=\"text/css\">"+".abmenutt{display:none;}"+"</style>"+"</head>";
-        mWebView.loadData(htmlText,"text/html","utf-8");
+        // String
+        // htmlText="<html>"+"<head>"+"<style type=\"text/css\">"+".abmenutt{display:none;}"+"</style>"+"</head>";
+        // mWebView.loadData(htmlText,"text/html","utf-8");
         // mWebView.loadUrl("javascript:document.getElementsByClassName('abmenutt')[0].style.display = 'none';");
         mWebView.loadUrl(url);
     }

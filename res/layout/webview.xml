@@ -6,29 +6,65 @@
     <WebView
         android:id="@+id/webview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!--
     <TableLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        >
 
-        <TableRow>
+        <TableRow  >
+
+              <ImageButton
+                  android:id="@+id/btnRefresh"
+                  android:layout_width="49dp"
+                  android:layout_height="49dp"
+                  android:paddingRight="6dp"
+                  android:paddingTop="4dp"
+                  android:src="@drawable/refresh" />
 
             <ImageButton
-                android:id="@+id/btnBack"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/back" />
+                android:id="@+id/btnHome"
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:paddingRight="6dp"
+                android:paddingTop="4dp"
+                android:src="@drawable/home" />
 
             <ImageButton
-                android:id="@+id/btnReload"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/reload" />
+                android:id="@+id/btnSignIn"
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:paddingRight="6dp"
+                android:paddingTop="4dp"
+                android:src="@drawable/signin" />
+
+            <ImageButton
+                android:id="@+id/btnNotice"
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:paddingRight="6dp"
+                android:paddingTop="4dp"
+                android:src="@drawable/notice" />
+
+            <ImageButton
+                android:id="@+id/btnBorrow"
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:paddingRight="6dp"
+                android:paddingTop="4dp"
+                android:src="@drawable/borrow" />
+
+            <ImageButton
+                android:id="@+id/btnAccount"
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:paddingRight="6dp"
+                android:paddingTop="4dp"
+                android:src="@drawable/account" />
+
         </TableRow>
     </TableLayout>
-     -->
 
 </LinearLayout>
