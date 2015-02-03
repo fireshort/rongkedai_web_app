@@ -27,3 +27,6 @@ proguard/
 *.iml
 *.ipr
 *.iws
+
+gradle.properties
+manifest-merger-release-report.txt

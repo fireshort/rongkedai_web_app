@@ -17,7 +17,7 @@
             >
               <ImageButton
                   android:id="@+id/btnRefresh"
-                  android:layout_width="49dp"
+                  android:layout_width="0dp" android:layout_weight="1"
                   android:layout_height="49dp"
                   android:paddingRight="6dp"
                   android:paddingTop="4dp"
@@ -25,7 +25,7 @@
 
             <ImageButton
                 android:id="@+id/btnHome"
-                android:layout_width="49dp"
+                android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="49dp"
                 android:paddingRight="6dp"
                 android:paddingTop="4dp"
@@ -33,7 +33,7 @@
 
             <ImageButton
                 android:id="@+id/btnSignIn"
-                android:layout_width="49dp"
+                android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="49dp"
                 android:paddingRight="6dp"
                 android:paddingTop="4dp"
@@ -41,7 +41,7 @@
 
             <ImageButton
                 android:id="@+id/btnNotice"
-                android:layout_width="49dp"
+                android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="49dp"
                 android:paddingRight="6dp"
                 android:paddingTop="4dp"
@@ -49,7 +49,7 @@
 
             <ImageButton
                 android:id="@+id/btnBorrow"
-                android:layout_width="49dp"
+                android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="49dp"
                 android:paddingRight="6dp"
                 android:paddingTop="4dp"
@@ -57,7 +57,7 @@
 
             <ImageButton
                 android:id="@+id/btnAccount"
-                android:layout_width="49dp"
+                android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="49dp"
                 android:paddingRight="6dp"
                 android:paddingTop="4dp"
