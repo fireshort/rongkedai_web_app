@@ -22,4 +22,6 @@ public class Urls
     public static final String DISCUSSION_WEB=HOST+"mobile/rongkehui/index.jsp";
 
     public static final String ACCOUNT_WEB=HOST+"wapaccount/intoMyAccount.jhtml";
+
+    public static final String INTO_BORROW_DETAIL_WEB=HOST+"wapborrow/intoborrowdetails.jhtml?borrowid=";
 }

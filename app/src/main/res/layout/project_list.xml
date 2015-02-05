@@ -11,7 +11,7 @@
             android:clipToPadding="false"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:paddingBottom="10dp"
+            android:paddingBottom="20dp"
             android:numColumns="1"
             android:stretchMode="columnWidth"
             android:horizontalSpacing="10dp"

@@ -7,6 +7,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.rongkedai.misc.Urls;
+import com.rongkedai.ui.ProjectListActivity;
 
 public class MainActivity extends Activity
 {
@@ -25,8 +26,8 @@ public class MainActivity extends Activity
         switch(tv.getId())
         {
         case R.id.borrow_tv:
-            intent=new Intent(this,WebViewActivity.class);
-            intent.putExtra("url",Urls.PROJECT_LIST_WEB);
+            intent=new Intent(this,ProjectListActivity.class);
+            //intent.putExtra("url",Urls.PROJECT_LIST_WEB);
             startActivity(intent);
             break;
         case R.id.website_notice_view:

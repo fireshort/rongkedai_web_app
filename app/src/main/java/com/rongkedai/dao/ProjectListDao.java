@@ -11,10 +11,10 @@ import java.util.ArrayList;
 public class ProjectListDao extends AbsDao<ArrayList<ProjectBean>>
 {
 
-//    startIndex	选填	起始记录数
+//    pageNumber	页码
 //    itemsPerPage	选填	一页显示多少条
 
-    private long startIndex;
+    private long pageNumber;
 
     private int itemPerPage;
 
@@ -22,14 +22,14 @@ public class ProjectListDao extends AbsDao<ArrayList<ProjectBean>>
     protected void onPreSetupSignature()
     {
         super.onPreSetupSignature();
-        put("startIndex",startIndex);
+        put("pageNumber",pageNumber);
         put("itemsPerPage",itemPerPage);
     }
 
     @Override
     protected ArrayList<ProjectBean> parse(JSONObject response) throws JSONException
     {
-        JSONArray array=response.getJSONArray("items");
+        JSONArray array=response.getJSONArray("result");
         ArrayList<ProjectBean> list=new ArrayList<ProjectBean>(array.length());
         for(int i=0; i<array.length(); i++)
         {
@@ -38,6 +38,13 @@ public class ProjectListDao extends AbsDao<ArrayList<ProjectBean>>
             item.setId(obj.getLong("id"));
             item.setName(obj.getString("name"));
             item.setApr(obj.getString("apr"));
+            item.setTime_limit(obj.getString("time_limit"));
+            item.setAccount(obj.getLong("account"));
+            item.setAccount_no(obj.getLong("account_no"));
+            item.setAccount_yes(obj.getDouble("account_yes"));
+            item.setStyle(obj.getInt("style"));
+            item.setStatus(obj.getInt("status"));
+            item.setFunds(obj.getString("funds"));
             list.add(item);
         }
         return list;
@@ -54,9 +61,9 @@ public class ProjectListDao extends AbsDao<ArrayList<ProjectBean>>
         this.itemPerPage=itemPerPage;
     }
 
-    public void setStartIndex(long startIndex)
+    public void setPageNumber(long pageNumber)
     {
-        this.startIndex=startIndex;
+        this.pageNumber=pageNumber;
     }
 
 }

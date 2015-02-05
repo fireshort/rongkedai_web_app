@@ -1,20 +1,21 @@
 package com.rongkedai.ui;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
+import android.view.*;
+import android.widget.*;
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.rongkedai.R;
+import com.rongkedai.WebViewActivity;
 import com.rongkedai.bean.ProjectBean;
 import com.rongkedai.dao.ProjectListDao;
 import com.rongkedai.misc.Setting;
+import com.rongkedai.misc.Urls;
 import com.yuexiaohome.framework.exception.AppException;
 import com.yuexiaohome.framework.lib.AsyncTaskEx;
 import com.yuexiaohome.framework.util.Utils;
@@ -45,8 +46,15 @@ public class ProjectListActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.project_list);
+
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
+        ActionBar actionBar = this.getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        setContentView(R.layout.project_list);
+        ButterKnife.inject(this);
+
         mInflater=getLayoutInflater();
         mAdapter=new ListAdapter();
 
@@ -56,7 +64,6 @@ public class ProjectListActivity extends Activity
 
         mListTask=new RefreshTask().execute();
     }
-
 
     @Override
     public void onDestroy()
@@ -111,7 +118,7 @@ public class ProjectListActivity extends Activity
         protected ArrayList<ProjectBean> doInBackground(Void... params)
         {
             ProjectListDao dao=new ProjectListDao();
-            dao.setStartIndex(0);
+            dao.setPageNumber(1);
             dao.setItemPerPage(Setting.ITEMS_PER_PAGE);
             try
             {
@@ -149,7 +156,7 @@ public class ProjectListActivity extends Activity
         protected ArrayList<ProjectBean> doInBackground(Void... params)
         {
             ProjectListDao dao=new ProjectListDao();
-            dao.setStartIndex(mList.size());
+            dao.setPageNumber(mList.size()/Setting.ITEMS_PER_PAGE+1);
             dao.setItemPerPage(Setting.ITEMS_PER_PAGE);
             try
             {
@@ -195,6 +202,77 @@ public class ProjectListActivity extends Activity
         @Override
         public View getView(int position,View convertView,ViewGroup parent)
         {
+            ViewHolder holder;
+            if(convertView!=null)
+            {
+                holder=(ViewHolder)convertView.getTag();
+            }else
+            {
+                convertView=mInflater.inflate(R.layout.project_list_item,parent,false);
+                holder=new ViewHolder(convertView);
+                convertView.setTag(holder);
+            }
+
+            final ProjectBean item=mList.get(position);
+            holder.name.setText(item.getName());
+            String apr="年利率："+item.getApr()+"%";
+            if(!item.getFunds().equals("0"))
+                apr+=" 奖励："+item.getFunds()+"%";
+            holder.apr.setText(apr);
+            String limit="天";
+            if(item.getStyle()==3)
+                limit="个月";
+            holder.time_limit.setText("期限："+item.getTime_limit()+limit);
+            holder.account.setText("借款金额："+item.getAccount()+"元");
+            holder.acount_no.setText("还需金额："+item.getAccount_no()+"元");
+            holder.progress.setText("进度："+(int)(item.getAccount_yes()/item.getAccount()*100)+"%");
+
+            String buttonTxt="";
+            String buttonBg="#0e99da";
+            holder.borrowBtn.setEnabled(false);
+            switch(item.getStatus())
+            {
+            case 3:
+                buttonTxt="我要投资";
+                buttonBg="#ff0000";
+                holder.borrowBtn.setEnabled(true);
+                holder.borrowBtn.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Intent intent=new Intent(ProjectListActivity.this,WebViewActivity.class);
+                        intent.putExtra("url",Urls.INTO_BORROW_DETAIL_WEB+item.getId());
+                        startActivity(intent);
+
+                    }
+                });
+                break;
+            case 4:
+                buttonTxt="已满标";
+                buttonBg="#0e99da";
+                break;
+            case 5:
+                buttonTxt="还款中";
+                buttonBg="#0e99da";
+                break;
+            case 6:
+                buttonTxt="已还完";
+                buttonBg="#CCCCCC";
+                break;
+            default:
+                buttonTxt="预审中";
+                buttonBg="#CCCCCC";
+                break;
+            }
+            holder.borrowBtn.setText(buttonTxt);
+            //holder.borrowBtn.setBackgroundColor(buttonBg);
+            holder.borrowBtn.getBackground().setColorFilter(Color.parseColor(buttonBg), PorterDuff.Mode.DARKEN);
+
+
+            // etc...
+
+            return convertView;
 //            if(convertView==null)
 //                convertView=mInflater.inflate(R.layout.terminal_list_item,parent,false);
 //            TextView titleTV=(TextView)convertView.findViewById(R.id.term_item_title_tv);
@@ -203,8 +281,46 @@ public class ProjectListActivity extends Activity
 //            ProjectBean item=mList.get(position);
 //            titleTV.setText(item.getTitle());
 //            brandTV.setText(item.getBrand());
-            return convertView;
         }
+    }
+
+    static class ViewHolder
+    {
+        @InjectView(R.id.name_tv)
+        TextView name;
+
+        @InjectView(R.id.apr_tv)
+        TextView apr;
+
+        @InjectView(R.id.time_limit_tv)
+        TextView time_limit;
+
+        @InjectView(R.id.account_tv)
+        TextView account;
+
+        @InjectView(R.id.account_no_tv)
+        TextView acount_no;
+
+        @InjectView(R.id.borrow_btn)
+        Button borrowBtn;
+
+        @InjectView(R.id.progress_tv)
+        TextView progress;
+
+        public ViewHolder(View view)
+        {
+            ButterKnife.inject(this,view);
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //add top-left icon click event deal
+        switch(item.getItemId()){
+        case android.R.id.home:
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

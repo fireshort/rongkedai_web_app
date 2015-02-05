@@ -1,7 +1,6 @@
 package com.rongkedai.dao;
 
 import com.yuexiaohome.framework.exception.AppException;
-import com.rongkedai.misc.Setting;
 import com.yuexiaohome.framework.http.HttpException;
 import com.yuexiaohome.framework.http.HttpMethod;
 import com.yuexiaohome.framework.http.HttpUtility;
@@ -21,7 +20,7 @@ public abstract class AbsDao<T>
 
     public T doAction() throws AppException
     {
-        //onPreSetupSignature();
+        onPreSetupSignature();
         //setupSignature();
         //onPostSetupSignature();
         try
@@ -58,7 +57,7 @@ public abstract class AbsDao<T>
     protected void onPreSetupSignature()
     {
         put("apiVersion","1.0");
-        put("lang",Setting.getLang());
+        //put("lang",Setting.getLang());
     }
 
     protected void onPostSetupSignature()
