@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <ListView
+            android:listSelector="@drawable/list_view_fg_slr"
+            android:drawSelectorOnTop="true"
+            android:scrollbarStyle="outsideOverlay"
+            android:clipToPadding="false"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="10dp"
+            android:numColumns="1"
+            android:stretchMode="columnWidth"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="10dp"
+            android:id="@+id/project_list_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    <ProgressBar
+            android:visibility="gone"
+            android:layout_marginBottom="-5dp"
+            android:layout_gravity="bottom"
+            android:indeterminate="true"
+            android:id="@+id/project_load_more_pb"
+            style="?android:progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+</FrameLayout>

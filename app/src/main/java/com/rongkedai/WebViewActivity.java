@@ -1,36 +1,46 @@
 package com.rongkedai;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.webkit.GeolocationPermissions;
-import android.webkit.JsResult;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebSettings.RenderPriority;
+import android.view.*;
+import android.webkit.*;
 import android.webkit.WebSettings.ZoomDensity;
-import android.webkit.WebStorage;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+import com.rongkedai.misc.Urls;
 
 public class WebViewActivity extends Activity
 {
-    private WebView mWebView;
+    @InjectView(R.id.webview)
+    WebView mWebView;
 
-    private ImageButton btnBack,btnRefresh,btnHome,btnSignIn,btnNotice,btnBorrow,btnAccount;
+    @InjectView(R.id.btnRefresh)
+    ImageButton btnRefresh;
+
+    @InjectView(R.id.btnSignIn)
+    ImageButton btnSignIn;
+
+    @InjectView(R.id.btnNotice)
+    ImageButton btnNotice;
+
+    @InjectView(R.id.btnBorrow)
+    ImageButton btnBorrow;
+
+    @InjectView(R.id.btnAccount)
+    ImageButton btnAccount;
 
     private static final String LOG_TAG="WebViewActivity";
 
     private final WebViewClient mWebViewClient=new WebViewClient()
     {
-        // ´¦ÀíÒ³Ãæµ¼º½
+        // å¤„ç†é¡µé¢å¯¼èˆª
         @Override
         public boolean shouldOverrideUrlLoading(WebView view,String url)
         {
@@ -56,8 +66,8 @@ public class WebViewActivity extends Activity
         }
     };
 
-    // ä¯ÀÀÍøÒ³ÀúÊ·¼ÇÂ¼
-    // goBack()ºÍgoForward()
+    // æµè§ˆç½‘é¡µå†å²è®°å½•
+    // goBack()å’ŒgoForward()
     @Override
     public boolean onKeyDown(int keyCode,KeyEvent event)
     {
@@ -76,7 +86,7 @@ public class WebViewActivity extends Activity
 
         private CustomViewCallback myCallback=null;
 
-        // ÅäÖÃÈ¨ÏŞ £¨ÔÚWebChromeClinetÖĞÊµÏÖ£©
+        // é…ç½®æƒé™ ï¼ˆåœ¨WebChromeClinetä¸­å®ç°ï¼‰
         @Override
         public void onGeolocationPermissionsShowPrompt(String origin,GeolocationPermissions.Callback callback)
         {
@@ -84,7 +94,7 @@ public class WebViewActivity extends Activity
             super.onGeolocationPermissionsShowPrompt(origin,callback);
         }
 
-        // À©³äÊı¾İ¿âµÄÈİÁ¿£¨ÔÚWebChromeClinetÖĞÊµÏÖ£©
+        // æ‰©å……æ•°æ®åº“çš„å®¹é‡ï¼ˆåœ¨WebChromeClinetä¸­å®ç°ï¼‰
         @Override
         public void onExceededDatabaseQuota(String url,String databaseIdentifier,long currentQuota,long estimatedSize,
                 long totalUsedQuota,WebStorage.QuotaUpdater quotaUpdater)
@@ -93,7 +103,7 @@ public class WebViewActivity extends Activity
             quotaUpdater.updateQuota(estimatedSize*2);
         }
 
-        // À©³ä»º´æµÄÈİÁ¿
+        // æ‰©å……ç¼“å­˜çš„å®¹é‡
         @Override
         public void onReachedMaxAppCacheSize(long spaceNeeded,long totalUsedQuota,WebStorage.QuotaUpdater quotaUpdater)
         {
@@ -101,7 +111,7 @@ public class WebViewActivity extends Activity
             quotaUpdater.updateQuota(spaceNeeded*2);
         }
 
-        // Android Ê¹WebViewÖ§³ÖHTML5 Video£¨È«ÆÁ£©²¥·ÅµÄ·½·¨
+        // Android ä½¿WebViewæ”¯æŒHTML5 Videoï¼ˆå…¨å±ï¼‰æ’­æ”¾çš„æ–¹æ³•
         @Override
         public void onShowCustomView(View view,CustomViewCallback callback)
         {
@@ -138,11 +148,11 @@ public class WebViewActivity extends Activity
             }
         }
 
-        // µ±WebView½ø¶È¸Ä±äÊ±¸üĞÂ´°¿Ú½ø¶È
+        // å½“WebViewè¿›åº¦æ”¹å˜æ—¶æ›´æ–°çª—å£è¿›åº¦
         @Override
         public void onProgressChanged(WebView view,int newProgress)
         {
-            // ActivityµÄ½ø¶È·¶Î§ÔÚ0µ½10000Ö®¼ä,ËùÒÔÕâÀïÒª³ËÒÔ100
+            // Activityçš„è¿›åº¦èŒƒå›´åœ¨0åˆ°10000ä¹‹é—´,æ‰€ä»¥è¿™é‡Œè¦ä¹˜ä»¥100
             // WebViewActivity.this.setProgress(newProgress*100);
         }
 
@@ -180,34 +190,35 @@ public class WebViewActivity extends Activity
     {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        // // È«ÆÁ
+        // // å…¨å±
+        ActionBar actionBar = this.getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.webview);
-        mWebView=(WebView)findViewById(R.id.webview);
+        ButterKnife.inject(this);
 
         WebSettings webSettings=mWebView.getSettings();
-        // ¿ªÆôJavascript½Å±¾
         webSettings.setJavaScriptEnabled(true);
-        // ÆôÓÃlocalStorage ºÍ SessionStorage
+        // å¯ç”¨localStorage å’Œ SessionStorage
         webSettings.setDomStorageEnabled(true);
-        // ¿ªÆôÓ¦ÓÃ³ÌĞò»º´æ
+        // å¼€å¯åº”ç”¨ç¨‹åºç¼“å­˜
         webSettings.setAppCacheEnabled(true);
         String appCacheDir=this.getApplicationContext().getDir("cache",Context.MODE_PRIVATE).getPath();
         webSettings.setAppCachePath(appCacheDir);
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        webSettings.setAppCacheMaxSize(1024*1024*10);// ÉèÖÃ»º³å´óĞ¡£¬ÎÒÉèµÄÊÇ10M
+        webSettings.setAppCacheMaxSize(1024*1024*10);// è®¾ç½®ç¼“å†²å¤§å°ï¼Œæˆ‘è®¾çš„æ˜¯10M
         webSettings.setAllowFileAccess(false);
-        // ÆôÓÃWebdatabaseÊı¾İ¿â
+        // å¯ç”¨Webdatabaseæ•°æ®åº“
         webSettings.setDatabaseEnabled(true);
         String databaseDir=this.getApplicationContext().getDir("database",Context.MODE_PRIVATE).getPath();
-        webSettings.setDatabasePath(databaseDir);// ÉèÖÃÊı¾İ¿âÂ·¾¶
-        webSettings.setGeolocationEnabled(true); // ÆôÓÃµØÀí¶¨Î»
-        // ÉèÖÃ¶¨Î»µÄÊı¾İ¿âÂ·¾¶
+        webSettings.setDatabasePath(databaseDir);// è®¾ç½®æ•°æ®åº“è·¯å¾„
+        webSettings.setGeolocationEnabled(true); // å¯ç”¨åœ°ç†å®šä½
+        // è®¾ç½®å®šä½çš„æ•°æ®åº“è·¯å¾„
         webSettings.setGeolocationDatabasePath(databaseDir);
-        // ¿ªÆô²å¼ş£¨¶ÔflashµÄÖ§³Ö£©
+        // å¼€å¯æ’ä»¶ï¼ˆå¯¹flashçš„æ”¯æŒï¼‰
         // webSettings.setPluginsEnabled(true);
-        webSettings.setRenderPriority(RenderPriority.HIGH);
+        //webSettings.setRenderPriority(RenderPriority.HIGH);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        // Ëõ·ÅÖ§³Ö
+        // ç¼©æ”¾æ”¯æŒ
         webSettings.setBuiltInZoomControls(true);
         webSettings.setSupportZoom(true);
         webSettings.setDisplayZoomControls(true);
@@ -220,15 +231,6 @@ public class WebViewActivity extends Activity
         mWebView.setWebViewClient(mWebViewClient);
         // mWebView.addJavascriptInterface(new UAJscriptHandler(this),"bms");
 
-        // btnBack=(ImageButton)findViewById(R.id.btnBack);
-        // btnBack.setOnClickListener(new View.OnClickListener()
-        // {
-        // public void onClick(View v)
-        // {
-        // finish();
-        // }
-        // });
-        btnRefresh=(ImageButton)findViewById(R.id.btnRefresh);
         btnRefresh.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
@@ -236,64 +238,69 @@ public class WebViewActivity extends Activity
                 mWebView.reload();
             }
         });
-        btnHome=(ImageButton)findViewById(R.id.btnHome);
-        btnHome.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                mWebView.loadUrl("https://www.rongkedai.com/wapborrow/nav.jhtml");
-            }
-        });
 
-        btnSignIn=(ImageButton)findViewById(R.id.btnSignIn);
         btnSignIn.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-                mWebView.loadUrl("https://www.rongkedai.com/wap/sign/signList.jhtml");
+                mWebView.loadUrl(Urls.SIGNIN_WEB);
             }
         });
 
-        btnNotice=(ImageButton)findViewById(R.id.btnNotice);
         btnNotice.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-                mWebView.loadUrl("https://www.rongkedai.com/mobile/wap/newsNotices/BorrowNotice.jsp");
+                mWebView.loadUrl(Urls.PROJECT_NOTICE_WEB);
+                btnNotice.setBackgroundColor(Color.GREEN);
             }
         });
 
-        btnBorrow=(ImageButton)findViewById(R.id.btnBorrow);
         btnBorrow.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-                mWebView.loadUrl("https://www.rongkedai.com/mobile/wap/borrow/index.jsp");
+                mWebView.loadUrl(Urls.PROJECT_LIST_WEB);
             }
         });
 
-        btnAccount=(ImageButton)findViewById(R.id.btnAccount);
         btnAccount.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-                mWebView.loadUrl("https://www.rongkedai.com/wapaccount/intoMyAccount.jhtml");
+                mWebView.loadUrl(Urls.ACCOUNT_WEB);
             }
         });
 
+    }
+
+    @OnClick(R.id.btnHome)
+    public void goHome(View view) {
+        //mWebView.loadUrl("https://www.rongkedai.com/wapborrow/nav.jhtml");
+        finish();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         this.initSettings();
-        String url="https://www.rongkedai.com/wapborrow/nav.jhtml";// intent.getStringExtra("url");
-        Log.d("bms",url);
-        // String
-        // htmlText="<html>"+"<head>"+"<style type=\"text/css\">"+".abmenutt{display:none;}"+"</style>"+"</head>";
-        // mWebView.loadData(htmlText,"text/html","utf-8");
-        // mWebView.loadUrl("javascript:document.getElementsByClassName('abmenutt')[0].style.display = 'none';");
+        String url=getIntent().getStringExtra("url");
+        //String url="https://www.rongkedai.com/wapborrow/nav.jhtml";// intent.getStringExtra("url");
+
         mWebView.loadUrl(url);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //add top-left icon click event deal
+        switch(item.getItemId()){
+        case android.R.id.home:
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

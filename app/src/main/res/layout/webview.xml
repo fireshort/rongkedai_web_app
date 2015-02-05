@@ -1,68 +1,71 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+              android:background="@color/main_bg"
+        >
 
     <WebView
-        android:id="@+id/webview"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+            android:id="@+id/webview"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:orientation="horizontal"
-            android:layout_marginTop="4dp"
+                  android:layout_marginTop="4dp"
+                  android:background="@android:color/white"
             >
-              <ImageButton
-                  android:id="@+id/btnRefresh"
-                  android:layout_width="0dp" android:layout_weight="1"
-                  android:layout_height="49dp"
-                  android:paddingRight="6dp"
-                  android:paddingTop="4dp"
-                  android:src="@drawable/refresh" />
-
-            <ImageButton
+        <ImageButton
                 android:id="@+id/btnHome"
                 android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="49dp"
+                android:layout_height="49dp" android:background="@null"
                 android:paddingRight="6dp"
                 android:paddingTop="4dp"
-                android:src="@drawable/home" />
+                android:src="@drawable/back"/>
 
-            <ImageButton
+        <ImageButton
+                android:id="@+id/btnRefresh"
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="49dp" android:background="@null"
+                android:paddingRight="6dp"
+                android:paddingTop="4dp"
+                android:src="@drawable/refresh"/>
+
+        <ImageButton
                 android:id="@+id/btnSignIn"
                 android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="49dp"
+                android:layout_height="49dp" android:background="@null"
                 android:paddingRight="6dp"
                 android:paddingTop="4dp"
-                android:src="@drawable/signin" />
+                android:src="@drawable/signin"/>
 
-            <ImageButton
+        <ImageButton
                 android:id="@+id/btnNotice"
                 android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="49dp"
+                android:layout_height="49dp" android:background="@null"
                 android:paddingRight="6dp"
                 android:paddingTop="4dp"
-                android:src="@drawable/notice" />
+                android:src="@drawable/notice"/>
 
-            <ImageButton
+        <ImageButton
                 android:id="@+id/btnBorrow"
                 android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="49dp"
+                android:layout_height="49dp" android:background="@null"
                 android:paddingRight="6dp"
                 android:paddingTop="4dp"
-                android:src="@drawable/borrow" />
+                android:src="@drawable/borrow"/>
 
-            <ImageButton
+        <ImageButton
                 android:id="@+id/btnAccount"
                 android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="49dp"
+                android:layout_height="49dp" android:background="@null"
                 android:paddingRight="6dp"
                 android:paddingTop="4dp"
-                android:src="@drawable/account" />
+                android:src="@drawable/account"/>
 
-</LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

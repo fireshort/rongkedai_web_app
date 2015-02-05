@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="navigation_bar_color">#ff2cb1e9</color>
+    <color name="starting_window_color">#000</color>
+    <color name="main_bg">#ebebeb</color>
+    <color name="term_detail_freq_bullet">#fe7d2e</color>
+    <color name="network_list_item_highlight">#41a1e9</color>
+    <color name="image_activity_bg">#c000</color>
+</resources>
