@@ -22,6 +22,7 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -256,7 +257,9 @@ public class ProjectListActivity extends Activity
             holder.time_limit.setText("期限："+item.getTime_limit()+limit);
             holder.account.setText("借款金额："+item.getAccount()+"元");
             holder.acount_no.setText("还需金额："+item.getAccount_no()+"元");
-            holder.progress.setText("进度："+(int)(item.getAccount_yes()/item.getAccount()*100)+"%");
+            double v=item.getAccount_yes()/item.getAccount();
+            BigDecimal b=new BigDecimal(String.valueOf(v*100));
+            holder.progress.setText("进度："+b.setScale(0,BigDecimal.ROUND_HALF_UP).intValue()+"%");
 
             String flag="";
             String flagBg="#2980b9";
