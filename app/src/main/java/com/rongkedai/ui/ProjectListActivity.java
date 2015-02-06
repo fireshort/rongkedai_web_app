@@ -82,8 +82,14 @@ public class ProjectListActivity extends Activity
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame,View content,View header)
             {
+                if(listView.getFirstVisiblePosition() > 0) {
+                    return false;
+                }
                 return true;
-                //return PtrDefaultHandler.checkContentCanBePulledDown(frame,content,header);
+                //return true;
+//                boolean canBePulledDown=checkContentCanBePulledDown(frame,content,header);
+//                L.d("canBePulledDown:"+canBePulledDown);
+//                return canBePulledDown;
             }
         });
         ptrFrame.postDelayed(new Runnable() {
@@ -94,6 +100,8 @@ public class ProjectListActivity extends Activity
         }, 100);
 
     }
+
+
 
     @Override
     public void onDestroy()

@@ -80,6 +80,9 @@ public class ProjectNoticeListActivity extends Activity
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame,View content,View header)
             {
+                if(listView.getFirstVisiblePosition() > 0) {
+                    return false;
+                }
                 return true;
                 //return PtrDefaultHandler.checkContentCanBePulledDown(frame,content,header);
             }
@@ -108,6 +111,7 @@ public class ProjectNoticeListActivity extends Activity
 //        startActivity(intent);
         Intent intent=new Intent(this,WebViewActivity.class);
         intent.putExtra("url",Urls.PROJECT_NOTICE_DETAIL_WEB+id);
+        intent.putExtra("useWideViewPort",false);
         startActivity(intent);
     }
 

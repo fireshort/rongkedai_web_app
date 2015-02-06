@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
 import android.webkit.*;
-import android.webkit.WebSettings.ZoomDensity;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
@@ -198,44 +197,36 @@ public class WebViewActivity extends Activity
                 //return PtrDefaultHandler.checkContentCanBePulledDown(frame,content,header);
             }
         });
-        /*
-        ptrFrame.postDelayed(new Runnable() {
-                                 @Override
-                                 public void run() {
-                                     ptrFrame.autoRefresh();
-                                 }
-                             },100);*/
 
-        WebSettings webSettings=mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+        WebSettings settings=mWebView.getSettings();
+        settings.setJavaScriptEnabled(true);
         // 启用localStorage 和 SessionStorage
-        webSettings.setDomStorageEnabled(true);
+        settings.setDomStorageEnabled(true);
         // 开启应用程序缓存
-        webSettings.setAppCacheEnabled(true);
+        settings.setAppCacheEnabled(true);
         String appCacheDir=this.getApplicationContext().getDir("cache",Context.MODE_PRIVATE).getPath();
-        webSettings.setAppCachePath(appCacheDir);
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        webSettings.setAppCacheMaxSize(1024*1024*10);// 设置缓冲大小，我设的是10M
-        webSettings.setAllowFileAccess(false);
+        settings.setAppCachePath(appCacheDir);
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        settings.setAppCacheMaxSize(1024*1024*10);// 设置缓冲大小，我设的是10M
+        settings.setAllowFileAccess(false);
         // 启用Webdatabase数据库
-        webSettings.setDatabaseEnabled(true);
+        settings.setDatabaseEnabled(true);
         String databaseDir=this.getApplicationContext().getDir("database",Context.MODE_PRIVATE).getPath();
-        webSettings.setDatabasePath(databaseDir);// 设置数据库路径
-        webSettings.setGeolocationEnabled(true); // 启用地理定位
+        settings.setDatabasePath(databaseDir);// 设置数据库路径
+        settings.setGeolocationEnabled(true); // 启用地理定位
         // 设置定位的数据库路径
-        webSettings.setGeolocationDatabasePath(databaseDir);
+        settings.setGeolocationDatabasePath(databaseDir);
         // 开启插件（对flash的支持）
-        // webSettings.setPluginsEnabled(true);
-        //webSettings.setRenderPriority(RenderPriority.HIGH);
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        // settings.setPluginsEnabled(true);
+        //settings.setRenderPriority(RenderPriority.HIGH);
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
         // 缩放支持
-        webSettings.setBuiltInZoomControls(true);
-        webSettings.setSupportZoom(true);
-        webSettings.setDisplayZoomControls(true);
-        webSettings.setDefaultZoom(ZoomDensity.FAR);
-
-        webSettings.setUseWideViewPort(true);
-        webSettings.setLoadWithOverviewMode(true);
+        settings.setBuiltInZoomControls(true);
+        settings.setSupportZoom(true);
+        settings.setDisplayZoomControls(false);
+        Boolean useWideViewPort=getIntent().getBooleanExtra("useWideViewPort",true);
+        settings.setUseWideViewPort(useWideViewPort);
+        settings.setLoadWithOverviewMode(true);
 
         mWebView.setWebChromeClient(mChromeClient);
         mWebView.setWebViewClient(mWebViewClient);
