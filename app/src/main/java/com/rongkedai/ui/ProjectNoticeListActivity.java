@@ -173,7 +173,7 @@ public class ProjectNoticeListActivity extends Activity
             mAdapter.notifyDataSetChanged();
             ProjectNoticeListActivity.this.setProgressBarIndeterminateVisibility(false);
             mAllLoaded=NoticeBeans.size()<Setting.ITEMS_PER_PAGE;
-            listView.smoothScrollToPosition(0);
+            //listView.smoothScrollToPosition(0);
 
             ptrFrame.refreshComplete();
             new LoadMoreTask().execute();

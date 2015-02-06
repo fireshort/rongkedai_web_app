@@ -5,18 +5,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:orientation="vertical"
-                  android:background="@color/main_bg"
-            >
+
 
         <WebView
                 android:id="@+id/webview"
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_height="wrap_content"/>
 
         <!--
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -76,5 +70,4 @@
 
         </LinearLayout>-->
 
-    </LinearLayout>
 </in.srain.cube.views.ptr.PtrClassicFrameLayout>

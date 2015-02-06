@@ -88,12 +88,12 @@ public class ProjectListActivity extends Activity
                 return true;
             }
         });
-//        ptrFrame.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                ptrFrame.autoRefresh();
-//            }
-//        }, 100);
+        ptrFrame.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ptrFrame.autoRefresh();
+            }
+        }, 100);
 
     }
 
@@ -101,7 +101,7 @@ public class ProjectListActivity extends Activity
     protected void onStart()
     {
         super.onStart();
-        new RefreshTask().execute();
+        //new RefreshTask().execute();
     }
 
     @Override
@@ -170,16 +170,17 @@ public class ProjectListActivity extends Activity
         }
 
         @Override
-        protected void onPostExecute(ArrayList<ProjectBean> ProjectBeans)
+        protected void onPostExecute(ArrayList<ProjectBean> projectBeans)
         {
             mList.clear();
-            mList.addAll(ProjectBeans);
+            mList.addAll(projectBeans);
             mAdapter.notifyDataSetChanged();
             ProjectListActivity.this.setProgressBarIndeterminateVisibility(false);
-            mAllLoaded=ProjectBeans.size()<Setting.ITEMS_PER_PAGE;
-            listView.smoothScrollToPosition(0);
+            mAllLoaded=projectBeans.size()<Setting.ITEMS_PER_PAGE;
+            //listView.smoothScrollToPosition(0);
 
             ptrFrame.refreshComplete();
+            new LoadMoreTask().execute();
         }
     }
 
@@ -210,12 +211,12 @@ public class ProjectListActivity extends Activity
         }
 
         @Override
-        protected void onPostExecute(ArrayList<ProjectBean> ProjectBeans)
+        protected void onPostExecute(ArrayList<ProjectBean> projectBeans)
         {
             mLoadingFooter.setVisibility(View.GONE);
-            mList.addAll(ProjectBeans);
+            mList.addAll(projectBeans);
             mAdapter.notifyDataSetChanged();
-            mAllLoaded=ProjectBeans.size()<Setting.ITEMS_PER_PAGE;
+            mAllLoaded=projectBeans.size()<Setting.ITEMS_PER_PAGE;
         }
     }
 
@@ -256,6 +257,14 @@ public class ProjectListActivity extends Activity
 
             final ProjectBean item=mList.get(position);
             holder.name.setText(item.getName());
+            holder.name.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    showDetail(item);
+                }
+            });
             String apr="年利率："+item.getApr()+"%";
             if(!item.getFunds().equals("0"))
                 apr+=" 奖励："+item.getFunds()+"%";
@@ -325,10 +334,7 @@ public class ProjectListActivity extends Activity
                     @Override
                     public void onClick(View v)
                     {
-                        Intent intent=new Intent(ProjectListActivity.this,WebViewActivity.class);
-                        intent.putExtra("url",Urls.INTO_BORROW_DETAIL_WEB+item.getId());
-                        startActivity(intent);
-
+                        showDetail(item);
                     }
                 });
                 break;
@@ -364,6 +370,13 @@ public class ProjectListActivity extends Activity
 //            titleTV.setText(item.getTitle());
 //            brandTV.setText(item.getBrand());
         }
+    }
+
+    private void showDetail(ProjectBean item)
+    {
+        Intent intent=new Intent(this,WebViewActivity.class);
+        intent.putExtra("url",Urls.INTO_BORROW_DETAIL_WEB+item.getId());
+        startActivity(intent);
     }
 
     static class ViewHolder
