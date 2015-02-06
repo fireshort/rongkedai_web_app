@@ -86,22 +86,23 @@ public class ProjectListActivity extends Activity
                     return false;
                 }
                 return true;
-                //return true;
-//                boolean canBePulledDown=checkContentCanBePulledDown(frame,content,header);
-//                L.d("canBePulledDown:"+canBePulledDown);
-//                return canBePulledDown;
             }
         });
-        ptrFrame.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ptrFrame.autoRefresh();
-            }
-        }, 100);
+//        ptrFrame.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                ptrFrame.autoRefresh();
+//            }
+//        }, 100);
 
     }
 
-
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        new RefreshTask().execute();
+    }
 
     @Override
     public void onDestroy()
