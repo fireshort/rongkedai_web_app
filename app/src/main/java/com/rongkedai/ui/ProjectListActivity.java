@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
@@ -19,6 +18,9 @@ import com.rongkedai.misc.Urls;
 import com.yuexiaohome.framework.exception.AppException;
 import com.yuexiaohome.framework.lib.AsyncTaskEx;
 import com.yuexiaohome.framework.util.Utils;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +29,13 @@ public class ProjectListActivity extends Activity
         implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener
 {
     @InjectView(R.id.project_list_lv)
-    ListView mGridView;
+    ListView listView;
 
     @InjectView(R.id.project_load_more_pb)
     View mLoadingFooter;
+
+    @InjectView(R.id.ptr_frame)
+    PtrClassicFrameLayout ptrFrame;
 
     private BaseAdapter mAdapter;
 
@@ -49,7 +54,7 @@ public class ProjectListActivity extends Activity
 
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-        ActionBar actionBar = this.getActionBar();
+        ActionBar actionBar=this.getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         setContentView(R.layout.project_list);
@@ -58,18 +63,44 @@ public class ProjectListActivity extends Activity
         mInflater=getLayoutInflater();
         mAdapter=new ListAdapter();
 
-        mGridView.setAdapter(mAdapter);
-        mGridView.setOnItemClickListener(this);
-        mGridView.setOnScrollListener(this);
+        listView.setAdapter(mAdapter);
+        listView.setOnItemClickListener(this);
+        listView.setOnScrollListener(this);
 
-        mListTask=new RefreshTask().execute();
+        //mListTask=new RefreshTask().execute();
+        mListTask=new RefreshTask();
+
+        ptrFrame.setLastUpdateTimeRelateObject(this);
+        ptrFrame.setPtrHandler(new PtrHandler()
+        {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame)
+            {
+                new RefreshTask().execute();
+            }
+
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame,View content,View header)
+            {
+                return true;
+                //return PtrDefaultHandler.checkContentCanBePulledDown(frame,content,header);
+            }
+        });
+        //ptrFrame.setLoadingMinTime(10000);
+        ptrFrame.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ptrFrame.autoRefresh();
+            }
+        }, 100);
+
     }
 
     @Override
     public void onDestroy()
     {
         super.onDestroy();
-        mGridView=null;
+        listView=null;
     }
 
     @Override
@@ -138,7 +169,9 @@ public class ProjectListActivity extends Activity
             mAdapter.notifyDataSetChanged();
             ProjectListActivity.this.setProgressBarIndeterminateVisibility(false);
             mAllLoaded=ProjectBeans.size()<Setting.ITEMS_PER_PAGE;
-            mGridView.smoothScrollToPosition(0);
+            listView.smoothScrollToPosition(0);
+
+            ptrFrame.refreshComplete();
         }
     }
 
@@ -227,6 +260,47 @@ public class ProjectListActivity extends Activity
             holder.acount_no.setText("还需金额："+item.getAccount_no()+"元");
             holder.progress.setText("进度："+(int)(item.getAccount_yes()/item.getAccount()*100)+"%");
 
+            String flag="";
+            String flagBg="#2980b9";
+            String use=item.getUse();
+            if(use.equals("244"))
+            {
+                flag="实";
+                flagBg="#2980b9";
+            }else if(use.equals("245"))
+            {
+                flag="网";
+                flagBg="#2980b9";
+            }else if(use.equals("246"))
+            {
+                flag="转";
+                flagBg="#458701;";
+            }else if(use.equals("249"))
+            {
+                flag="房";
+                flagBg="#51bad8";
+            }else if(use.equals("250"))
+            {
+                flag="车";
+                flagBg="#51bad8";
+            }else if(use.equals("260"))
+            {
+                flag="新";
+                flagBg="#51bad8";
+            }
+            if(item.getIs_vouch()==3)
+            {
+                flag="净";
+                flagBg="#4b3768";
+            }else if(item.getIs_vouch()==4)
+            {
+                flag="秒";
+                flagBg="#4b3768";
+            }
+            holder.flag.setText(flag);
+            holder.flag.setBackgroundColor(Color.parseColor(flagBg));
+            //holder.flag.getBackground().setColorFilter(Color.parseColor(flagBg), PorterDuff.Mode.DARKEN);
+
             String buttonTxt="";
             String buttonBg="#0e99da";
             holder.borrowBtn.setEnabled(false);
@@ -267,10 +341,8 @@ public class ProjectListActivity extends Activity
             }
             holder.borrowBtn.setText(buttonTxt);
             //holder.borrowBtn.setBackgroundColor(buttonBg);
-            holder.borrowBtn.getBackground().setColorFilter(Color.parseColor(buttonBg), PorterDuff.Mode.DARKEN);
-
-
-            // etc...
+            holder.borrowBtn.setBackgroundColor(Color.parseColor(buttonBg));
+            //holder.borrowBtn.getBackground().setColorFilter(Color.parseColor(buttonBg), PorterDuff.Mode.DARKEN);
 
             return convertView;
 //            if(convertView==null)
@@ -307,15 +379,21 @@ public class ProjectListActivity extends Activity
         @InjectView(R.id.progress_tv)
         TextView progress;
 
+        @InjectView(R.id.flag_tv)
+        TextView flag;
+
         public ViewHolder(View view)
         {
             ButterKnife.inject(this,view);
         }
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         //add top-left icon click event deal
-        switch(item.getItemId()){
+        switch(item.getItemId())
+        {
         case android.R.id.home:
             finish();
         }

@@ -45,6 +45,8 @@ public class ProjectListDao extends AbsDao<ArrayList<ProjectBean>>
             item.setStyle(obj.getInt("style"));
             item.setStatus(obj.getInt("status"));
             item.setFunds(obj.getString("funds"));
+            item.setUse(obj.getString("use"));
+            item.setIs_vouch(obj.getInt("is_vouch"));
             list.add(item);
         }
         return list;
