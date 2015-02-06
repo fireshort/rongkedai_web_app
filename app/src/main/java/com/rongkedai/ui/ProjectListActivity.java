@@ -78,7 +78,6 @@ public class ProjectListActivity extends Activity
             {
                 new RefreshTask().execute();
             }
-
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame,View content,View header)
             {
@@ -86,7 +85,6 @@ public class ProjectListActivity extends Activity
                 //return PtrDefaultHandler.checkContentCanBePulledDown(frame,content,header);
             }
         });
-        //ptrFrame.setLoadingMinTime(10000);
         ptrFrame.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -389,6 +387,14 @@ public class ProjectListActivity extends Activity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        //getMenuInflater().inflate(R.menu.menu_common, menu);
+        return true;
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         //add top-left icon click event deal
@@ -396,9 +402,14 @@ public class ProjectListActivity extends Activity
         {
         case android.R.id.home:
             finish();
+            break;
+        case R.id.action_refresh:
+            new RefreshTask().execute();
+            break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }

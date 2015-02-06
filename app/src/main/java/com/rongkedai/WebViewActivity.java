@@ -4,37 +4,39 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
 import android.webkit.*;
 import android.webkit.WebSettings.ZoomDensity;
-import android.widget.ImageButton;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
-import com.rongkedai.misc.Urls;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 
 public class WebViewActivity extends Activity
 {
     @InjectView(R.id.webview)
     WebView mWebView;
 
-    @InjectView(R.id.btnRefresh)
-    ImageButton btnRefresh;
+    @InjectView(R.id.ptr_frame)
+    PtrClassicFrameLayout ptrFrame;
 
-    @InjectView(R.id.btnSignIn)
-    ImageButton btnSignIn;
-
-    @InjectView(R.id.btnNotice)
-    ImageButton btnNotice;
-
-    @InjectView(R.id.btnBorrow)
-    ImageButton btnBorrow;
-
-    @InjectView(R.id.btnAccount)
-    ImageButton btnAccount;
+//    @InjectView(R.id.btnRefresh)
+//    ImageButton btnRefresh;
+//
+//    @InjectView(R.id.btnSignIn)
+//    ImageButton btnSignIn;
+//
+//    @InjectView(R.id.btnNotice)
+//    ImageButton btnNotice;
+//
+//    @InjectView(R.id.btnBorrow)
+//    ImageButton btnBorrow;
+//
+//    @InjectView(R.id.btnAccount)
+//    ImageButton btnAccount;
 
     private static final String LOG_TAG="WebViewActivity";
 
@@ -44,7 +46,6 @@ public class WebViewActivity extends Activity
         @Override
         public boolean shouldOverrideUrlLoading(WebView view,String url)
         {
-            Log.d(LOG_TAG,"Loading url="+url);
             mWebView.loadUrl(url);
             return true;
         }
@@ -56,6 +57,7 @@ public class WebViewActivity extends Activity
             super.onPageFinished(view,url);
             String javascript="javascript:document.getElementsByTagName('footer')[0].style.display = 'none';javascript:document.getElementsByClassName('header')[0].style.display = 'none';javascript:document.getElementsByClassName('banner')[0].style.display = 'none';void(0)";
             view.loadUrl(javascript);
+            ptrFrame.refreshComplete();
         }
 
         @Override
@@ -92,23 +94,6 @@ public class WebViewActivity extends Activity
         {
             callback.invoke(origin,true,false);
             super.onGeolocationPermissionsShowPrompt(origin,callback);
-        }
-
-        // 扩充数据库的容量（在WebChromeClinet中实现）
-        @Override
-        public void onExceededDatabaseQuota(String url,String databaseIdentifier,long currentQuota,long estimatedSize,
-                long totalUsedQuota,WebStorage.QuotaUpdater quotaUpdater)
-        {
-
-            quotaUpdater.updateQuota(estimatedSize*2);
-        }
-
-        // 扩充缓存的容量
-        @Override
-        public void onReachedMaxAppCacheSize(long spaceNeeded,long totalUsedQuota,WebStorage.QuotaUpdater quotaUpdater)
-        {
-
-            quotaUpdater.updateQuota(spaceNeeded*2);
         }
 
         // Android 使WebView支持HTML5 Video（全屏）播放的方法
@@ -196,6 +181,31 @@ public class WebViewActivity extends Activity
         setContentView(R.layout.webview);
         ButterKnife.inject(this);
 
+        ptrFrame.setLastUpdateTimeRelateObject(this);
+        ptrFrame.setPtrHandler(new PtrHandler()
+        {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame)
+            {
+                //updateData();
+                mWebView.reload();
+            }
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame,View content,View header)
+            {
+                return mWebView.getScrollY() == 0;
+                //return true;
+                //return PtrDefaultHandler.checkContentCanBePulledDown(frame,content,header);
+            }
+        });
+        /*
+        ptrFrame.postDelayed(new Runnable() {
+                                 @Override
+                                 public void run() {
+                                     ptrFrame.autoRefresh();
+                                 }
+                             },100);*/
+
         WebSettings webSettings=mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         // 启用localStorage 和 SessionStorage
@@ -231,50 +241,46 @@ public class WebViewActivity extends Activity
         mWebView.setWebViewClient(mWebViewClient);
         // mWebView.addJavascriptInterface(new UAJscriptHandler(this),"bms");
 
-        btnRefresh.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                mWebView.reload();
-            }
-        });
-
-        btnSignIn.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                mWebView.loadUrl(Urls.SIGNIN_WEB);
-            }
-        });
-
-        btnNotice.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                mWebView.loadUrl(Urls.PROJECT_NOTICE_WEB);
-                btnNotice.setBackgroundColor(Color.GREEN);
-            }
-        });
-
-        btnBorrow.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                mWebView.loadUrl(Urls.PROJECT_LIST_WEB);
-            }
-        });
-
-        btnAccount.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                mWebView.loadUrl(Urls.ACCOUNT_WEB);
-            }
-        });
+//        btnRefresh.setOnClickListener(new View.OnClickListener()
+//        {
+//            public void onClick(View v)
+//            {
+//                mWebView.reload();
+//            }
+//        });
+//        btnSignIn.setOnClickListener(new View.OnClickListener()
+//        {
+//            public void onClick(View v)
+//            {
+//                mWebView.loadUrl(Urls.SIGNIN_WEB);
+//            }
+//        });
+//        btnNotice.setOnClickListener(new View.OnClickListener()
+//        {
+//            public void onClick(View v)
+//            {
+//                mWebView.loadUrl(Urls.PROJECT_NOTICE_WEB);
+//                btnNotice.setBackgroundColor(Color.GREEN);
+//            }
+//        });
+//        btnBorrow.setOnClickListener(new View.OnClickListener()
+//        {
+//            public void onClick(View v)
+//            {
+//                mWebView.loadUrl(Urls.PROJECT_LIST_WEB);
+//            }
+//        });
+//        btnAccount.setOnClickListener(new View.OnClickListener()
+//        {
+//            public void onClick(View v)
+//            {
+//                mWebView.loadUrl(Urls.ACCOUNT_WEB);
+//            }
+//        });
 
     }
 
-    @OnClick(R.id.btnHome)
+    //@OnClick(R.id.btnHome)
     public void goHome(View view) {
         //mWebView.loadUrl("https://www.rongkedai.com/wapborrow/nav.jhtml");
         finish();
@@ -289,6 +295,11 @@ public class WebViewActivity extends Activity
         String url=getIntent().getStringExtra("url");
         //String url="https://www.rongkedai.com/wapborrow/nav.jhtml";// intent.getStringExtra("url");
 
+        mWebView.loadUrl(url);
+    }
+
+    private void updateData() {
+        String url=getIntent().getStringExtra("url");
         mWebView.loadUrl(url);
     }
 

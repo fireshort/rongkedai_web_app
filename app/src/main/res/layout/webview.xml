@@ -1,71 +1,80 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical"
-              android:background="@color/main_bg"
+<in.srain.cube.views.ptr.PtrClassicFrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ptr_frame"
+        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         >
-
-    <WebView
-            android:id="@+id/webview"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:layout_marginTop="4dp"
-                  android:background="@android:color/white"
+                  android:layout_height="fill_parent"
+                  android:orientation="vertical"
+                  android:background="@color/main_bg"
             >
-        <ImageButton
-                android:id="@+id/btnHome"
-                android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="49dp" android:background="@null"
-                android:paddingRight="6dp"
-                android:paddingTop="4dp"
-                android:src="@drawable/back"/>
 
-        <ImageButton
-                android:id="@+id/btnRefresh"
-                android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="49dp" android:background="@null"
-                android:paddingRight="6dp"
-                android:paddingTop="4dp"
-                android:src="@drawable/refresh"/>
+        <WebView
+                android:id="@+id/webview"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
-        <ImageButton
-                android:id="@+id/btnSignIn"
-                android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="49dp" android:background="@null"
-                android:paddingRight="6dp"
-                android:paddingTop="4dp"
-                android:src="@drawable/signin"/>
+        <!--
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:layout_marginTop="4dp"
+                      android:background="@android:color/white"
+                >
+            <ImageButton
+                    android:id="@+id/btnHome"
+                    android:layout_width="0dp" android:layout_weight="1"
+                    android:layout_height="49dp" android:background="@null"
+                    android:paddingRight="6dp"
+                    android:paddingTop="4dp"
+                    android:src="@drawable/back"/>
 
-        <ImageButton
-                android:id="@+id/btnNotice"
-                android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="49dp" android:background="@null"
-                android:paddingRight="6dp"
-                android:paddingTop="4dp"
-                android:src="@drawable/notice"/>
+            <ImageButton
+                    android:id="@+id/btnRefresh"
+                    android:layout_width="0dp" android:layout_weight="1"
+                    android:layout_height="49dp" android:background="@null"
+                    android:paddingRight="6dp"
+                    android:paddingTop="4dp"
+                    android:src="@drawable/refresh"/>
 
-        <ImageButton
-                android:id="@+id/btnBorrow"
-                android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="49dp" android:background="@null"
-                android:paddingRight="6dp"
-                android:paddingTop="4dp"
-                android:src="@drawable/borrow"/>
+            <ImageButton
+                    android:id="@+id/btnSignIn"
+                    android:layout_width="0dp" android:layout_weight="1"
+                    android:layout_height="49dp" android:background="@null"
+                    android:paddingRight="6dp"
+                    android:paddingTop="4dp"
+                    android:src="@drawable/signin"/>
 
-        <ImageButton
-                android:id="@+id/btnAccount"
-                android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="49dp" android:background="@null"
-                android:paddingRight="6dp"
-                android:paddingTop="4dp"
-                android:src="@drawable/account"/>
+            <ImageButton
+                    android:id="@+id/btnNotice"
+                    android:layout_width="0dp" android:layout_weight="1"
+                    android:layout_height="49dp" android:background="@null"
+                    android:paddingRight="6dp"
+                    android:paddingTop="4dp"
+                    android:src="@drawable/notice"/>
+
+            <ImageButton
+                    android:id="@+id/btnBorrow"
+                    android:layout_width="0dp" android:layout_weight="1"
+                    android:layout_height="49dp" android:background="@null"
+                    android:paddingRight="6dp"
+                    android:paddingTop="4dp"
+                    android:src="@drawable/borrow"/>
+
+            <ImageButton
+                    android:id="@+id/btnAccount"
+                    android:layout_width="0dp" android:layout_weight="1"
+                    android:layout_height="49dp" android:background="@null"
+                    android:paddingRight="6dp"
+                    android:paddingTop="4dp"
+                    android:src="@drawable/account"/>
+
+        </LinearLayout>-->
 
     </LinearLayout>
-
-</LinearLayout>
+</in.srain.cube.views.ptr.PtrClassicFrameLayout>
