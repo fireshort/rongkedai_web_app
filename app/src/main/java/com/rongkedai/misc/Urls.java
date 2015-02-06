@@ -24,4 +24,8 @@ public class Urls
     public static final String ACCOUNT_WEB=HOST+"wapaccount/intoMyAccount.jhtml";
 
     public static final String INTO_BORROW_DETAIL_WEB=HOST+"wapborrow/intoborrowdetails.jhtml?borrowid=";
+
+    public static final String PROJECT_NOTICE_LIST=HOST+"wapNewsNotices/newsList.jhtml?type=6";
+
+    public static final String PROJECT_NOTICE_DETAIL_WEB=HOST+"wapNewsNotices/newsNotices.jhtml?id=";
 }

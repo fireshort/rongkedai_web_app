@@ -8,6 +8,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.rongkedai.misc.Urls;
 import com.rongkedai.ui.ProjectListActivity;
+import com.rongkedai.ui.ProjectNoticeListActivity;
 
 public class MainActivity extends Activity
 {
@@ -41,8 +42,7 @@ public class MainActivity extends Activity
             startActivity(intent);
             break;
         case R.id.project_notice_tv:
-            intent=new Intent(this,WebViewActivity.class);
-            intent.putExtra("url",Urls.PROJECT_NOTICE_WEB);
+            intent=new Intent(this,ProjectNoticeListActivity.class);
             startActivity(intent);
             break;
         case R.id.signin_tv:

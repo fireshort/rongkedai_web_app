@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#d1d1d1"
+        >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#f1f5f8"
+              android:layout_marginTop="10dp"
+        >
+
+    <TextView
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:id="@+id/title_tv"
+            android:gravity="left"
+            android:textColor="#15456f"
+            android:text="发标公告"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:drawableRight="@drawable/right_arrow"
+            />
+</LinearLayout>
+</LinearLayout>
