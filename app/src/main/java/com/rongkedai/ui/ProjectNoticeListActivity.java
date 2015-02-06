@@ -176,6 +176,7 @@ public class ProjectNoticeListActivity extends Activity
             listView.smoothScrollToPosition(0);
 
             ptrFrame.refreshComplete();
+            new LoadMoreTask().execute();
         }
     }
 
