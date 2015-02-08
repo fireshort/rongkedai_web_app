@@ -1,10 +1,10 @@
 package com.rongkedai.ui;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import android.widget.*;
 import butterknife.ButterKnife;
@@ -26,9 +26,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectListActivity extends Activity
-        implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener
-{
+public class ProjectListActivity extends ActionBarActivity
+        implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
     @InjectView(R.id.project_list_lv)
     ListView listView;
 
@@ -46,46 +45,57 @@ public class ProjectListActivity extends Activity
 
     private AsyncTaskEx<Void, Void, ArrayList<ProjectBean>> mLoadMoreTask;
 
-    private List<ProjectBean> mList=new ArrayList<ProjectBean>();
+    private List<ProjectBean> mList = new ArrayList<ProjectBean>();
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-        ActionBar actionBar=this.getActionBar();
+        ActionBar actionBar = this.getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         setContentView(R.layout.project_list);
         ButterKnife.inject(this);
 
-        mInflater=getLayoutInflater();
-        mAdapter=new ListAdapter();
+        mInflater = getLayoutInflater();
+        mAdapter = new ListAdapter();
 
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(this);
         listView.setOnScrollListener(this);
 
         //mListTask=new RefreshTask().execute();
-        mListTask=new RefreshTask();
+        mListTask = new RefreshTask();
 
         ptrFrame.setLastUpdateTimeRelateObject(this);
-        ptrFrame.setPtrHandler(new PtrHandler()
-        {
+        ptrFrame.setPtrHandler(new PtrHandler() {
             @Override
-            public void onRefreshBegin(PtrFrameLayout frame)
-            {
+            public void onRefreshBegin(PtrFrameLayout frame) {
                 new RefreshTask().execute();
             }
+
             @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame,View content,View header)
-            {
-                if(listView.getFirstVisiblePosition() > 0) {
-                    return false;
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+
+                View child1 = listView.getChildAt(0);
+                ViewGroup.LayoutParams glp = child1.getLayoutParams();
+                int top = child1.getTop();
+                if(glp instanceof ViewGroup.MarginLayoutParams) {
+                    ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)glp;
+                    return top == mlp.topMargin + listView.getPaddingTop();
+                } else {
+                    return top == listView.getPaddingTop();
                 }
-                return true;
+//                if (listView.getChildAt(0).getTop() > 0) {
+//                    return false;
+//                }
+//                return true;
+//                if(listView.getFirstVisiblePosition() > 0) {
+//                    return false;
+//                }
+//                return true;
                 //return true;
 //                boolean canBePulledDown=checkContentCanBePulledDown(frame,content,header);
 //                L.d("canBePulledDown:"+canBePulledDown);
@@ -102,251 +112,215 @@ public class ProjectListActivity extends Activity
     }
 
 
-
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
-        listView=null;
+        listView = null;
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent,View view,int position,long id)
-    {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //        Intent intent=new Intent(this,TerminalDetailActivity.class);
 //        intent.putExtra("id",id);
 //        startActivity(intent);
     }
 
-    private boolean mAllLoaded=false;
+    private boolean mAllLoaded = false;
 
-    private boolean mLastItemVisible=false;
+    private boolean mLastItemVisible = false;
 
     @Override
-    public void onScrollStateChanged(AbsListView view,int scrollState)
-    {
-        if(scrollState==SCROLL_STATE_IDLE
-                &&!mAllLoaded
-                &&mLastItemVisible
-                &&Utils.isTaskStopped(mLoadMoreTask))
-        {
-            mLoadMoreTask=new LoadMoreTask().execute();
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        if (scrollState == SCROLL_STATE_IDLE
+                && !mAllLoaded
+                && mLastItemVisible
+                && Utils.isTaskStopped(mLoadMoreTask)) {
+            mLoadMoreTask = new LoadMoreTask().execute();
         }
     }
 
     @Override
-    public void onScroll(AbsListView view,int firstVisibleItem,int visibleItemCount,
-            int totalItemCount)
-    {
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
+                         int totalItemCount) {
 //        L.v(String.format("%d %d %d", firstVisibleItem, visibleItemCount, totalItemCount));
-        mLastItemVisible=(firstVisibleItem+visibleItemCount)==totalItemCount;
+        mLastItemVisible = (firstVisibleItem + visibleItemCount) == totalItemCount;
     }
 
-    class RefreshTask extends AsyncTaskEx<Void, Void, ArrayList<ProjectBean>>
-    {
+    class RefreshTask extends AsyncTaskEx<Void, Void, ArrayList<ProjectBean>> {
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             ProjectListActivity.this.setProgressBarIndeterminateVisibility(true);
         }
 
         @Override
-        protected ArrayList<ProjectBean> doInBackground(Void... params)
-        {
-            ProjectListDao dao=new ProjectListDao();
+        protected ArrayList<ProjectBean> doInBackground(Void... params) {
+            ProjectListDao dao = new ProjectListDao();
             dao.setPageNumber(1);
             dao.setItemPerPage(Setting.ITEMS_PER_PAGE);
-            try
-            {
+            try {
                 return dao.doAction();
-            }catch(AppException e)
-            {
+            } catch (AppException e) {
                 setFailure(e);
                 return null;
             }
         }
 
         @Override
-        protected void onPostExecute(ArrayList<ProjectBean> ProjectBeans)
-        {
+        protected void onPostExecute(ArrayList<ProjectBean> ProjectBeans) {
             mList.clear();
             mList.addAll(ProjectBeans);
             mAdapter.notifyDataSetChanged();
             ProjectListActivity.this.setProgressBarIndeterminateVisibility(false);
-            mAllLoaded=ProjectBeans.size()<Setting.ITEMS_PER_PAGE;
+            mAllLoaded = ProjectBeans.size() < Setting.ITEMS_PER_PAGE;
             listView.smoothScrollToPosition(0);
 
             ptrFrame.refreshComplete();
         }
     }
 
-    class LoadMoreTask extends AsyncTaskEx<Void, Void, ArrayList<ProjectBean>>
-    {
+    class LoadMoreTask extends AsyncTaskEx<Void, Void, ArrayList<ProjectBean>> {
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
             mLoadingFooter.setVisibility(View.VISIBLE);
         }
 
         @Override
-        protected ArrayList<ProjectBean> doInBackground(Void... params)
-        {
-            ProjectListDao dao=new ProjectListDao();
-            dao.setPageNumber(mList.size()/Setting.ITEMS_PER_PAGE+1);
+        protected ArrayList<ProjectBean> doInBackground(Void... params) {
+            ProjectListDao dao = new ProjectListDao();
+            dao.setPageNumber(mList.size() / Setting.ITEMS_PER_PAGE + 1);
             dao.setItemPerPage(Setting.ITEMS_PER_PAGE);
-            try
-            {
+            try {
                 return dao.doAction();
-            }catch(AppException e)
-            {
+            } catch (AppException e) {
                 setFailure(e);
                 return null;
             }
         }
 
         @Override
-        protected void onPostExecute(ArrayList<ProjectBean> ProjectBeans)
-        {
+        protected void onPostExecute(ArrayList<ProjectBean> ProjectBeans) {
             mLoadingFooter.setVisibility(View.GONE);
             mList.addAll(ProjectBeans);
             mAdapter.notifyDataSetChanged();
-            mAllLoaded=ProjectBeans.size()<Setting.ITEMS_PER_PAGE;
+            mAllLoaded = ProjectBeans.size() < Setting.ITEMS_PER_PAGE;
         }
     }
 
-    class ListAdapter extends BaseAdapter
-    {
+    class ListAdapter extends BaseAdapter {
 
         @Override
-        public int getCount()
-        {
+        public int getCount() {
             return mList.size();
         }
 
         @Override
-        public Object getItem(int position)
-        {
+        public Object getItem(int position) {
             return null;
         }
 
         @Override
-        public long getItemId(int position)
-        {
+        public long getItemId(int position) {
             return mList.get(position).getId();
         }
 
         @Override
-        public View getView(int position,View convertView,ViewGroup parent)
-        {
+        public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
-            if(convertView!=null)
-            {
-                holder=(ViewHolder)convertView.getTag();
-            }else
-            {
-                convertView=mInflater.inflate(R.layout.project_list_item,parent,false);
-                holder=new ViewHolder(convertView);
+            if (convertView != null) {
+                holder = (ViewHolder) convertView.getTag();
+            } else {
+                convertView = mInflater.inflate(R.layout.project_list_item, parent, false);
+                holder = new ViewHolder(convertView);
                 convertView.setTag(holder);
             }
 
-            final ProjectBean item=mList.get(position);
+            final ProjectBean item = mList.get(position);
             holder.name.setText(item.getName());
-            String apr="年利率："+item.getApr()+"%";
-            if(!item.getFunds().equals("0"))
-                apr+=" 奖励："+item.getFunds()+"%";
+            String apr = "年利率：" + item.getApr() + "%";
+            if (!item.getFunds().equals("0"))
+                apr += " 奖励：" + item.getFunds() + "%";
             holder.apr.setText(apr);
-            String limit="天";
-            if(item.getStyle()==3)
-                limit="个月";
-            holder.time_limit.setText("期限："+item.getTime_limit()+limit);
-            holder.account.setText("借款金额："+item.getAccount()+"元");
-            holder.acount_no.setText("还需金额："+item.getAccount_no()+"元");
-            double v=item.getAccount_yes()/item.getAccount();
-            BigDecimal b=new BigDecimal(String.valueOf(v*100));
-            holder.progress.setText("进度："+b.setScale(0,BigDecimal.ROUND_HALF_UP).intValue()+"%");
+            String limit = "天";
+            if (item.getStyle() == 3)
+                limit = "个月";
+            holder.time_limit.setText("期限：" + item.getTime_limit() + limit);
+            holder.account.setText("借款金额：" + item.getAccount() + "元");
+            holder.acount_no.setText("还需金额：" + item.getAccount_no() + "元");
+            double v = item.getAccount_yes() / item.getAccount();
+            BigDecimal b = new BigDecimal(String.valueOf(v * 100));
+            holder.progress.setText("进度：" + b.setScale(0, BigDecimal.ROUND_HALF_UP).intValue() + "%");
 
-            String flag="";
-            String flagBg="#2980b9";
-            String use=item.getUse();
-            if(use.equals("244"))
-            {
-                flag="实";
-                flagBg="#2980b9";
-            }else if(use.equals("245"))
-            {
-                flag="网";
-                flagBg="#2980b9";
-            }else if(use.equals("246"))
-            {
-                flag="转";
-                flagBg="#458701;";
-            }else if(use.equals("249"))
-            {
-                flag="房";
-                flagBg="#51bad8";
-            }else if(use.equals("250"))
-            {
-                flag="车";
-                flagBg="#51bad8";
-            }else if(use.equals("260"))
-            {
-                flag="新";
-                flagBg="#51bad8";
+            String flag = "";
+            String flagBg = "#2980b9";
+            String use = item.getUse();
+            if (use.equals("244")) {
+                flag = "实";
+                flagBg = "#2980b9";
+            } else if (use.equals("245")) {
+                flag = "网";
+                flagBg = "#2980b9";
+            } else if (use.equals("246")) {
+                flag = "转";
+                flagBg = "#458701;";
+            } else if (use.equals("249")) {
+                flag = "房";
+                flagBg = "#51bad8";
+            } else if (use.equals("250")) {
+                flag = "车";
+                flagBg = "#51bad8";
+            } else if (use.equals("260")) {
+                flag = "新";
+                flagBg = "#51bad8";
             }
-            if(item.getIs_vouch()==3)
-            {
-                flag="净";
-                flagBg="#4b3768";
-            }else if(item.getIs_vouch()==4)
-            {
-                flag="秒";
-                flagBg="#4b3768";
+            if (item.getIs_vouch() == 3) {
+                flag = "净";
+                flagBg = "#4b3768";
+            } else if (item.getIs_vouch() == 4) {
+                flag = "秒";
+                flagBg = "#4b3768";
             }
             holder.flag.setText(flag);
             holder.flag.setBackgroundColor(Color.parseColor(flagBg));
             //holder.flag.getBackground().setColorFilter(Color.parseColor(flagBg), PorterDuff.Mode.DARKEN);
 
-            String buttonTxt="";
-            String buttonBg="#0e99da";
+            String buttonTxt = "";
+            String buttonBg = "#0e99da";
             holder.borrowBtn.setEnabled(false);
-            switch(item.getStatus())
-            {
-            case 3:
-                buttonTxt="我要投资";
-                buttonBg="#ff0000";
-                holder.borrowBtn.setEnabled(true);
-                holder.borrowBtn.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        Intent intent=new Intent(ProjectListActivity.this,WebViewActivity.class);
-                        intent.putExtra("url",Urls.INTO_BORROW_DETAIL_WEB+item.getId());
-                        startActivity(intent);
+            switch (item.getStatus()) {
+                case 3:
+                    buttonTxt = "我要投资";
+                    buttonBg = "#ff0000";
+                    holder.borrowBtn.setEnabled(true);
+                    holder.borrowBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(ProjectListActivity.this, WebViewActivity.class);
+                            intent.putExtra("url", Urls.INTO_BORROW_DETAIL_WEB + item.getId());
+                            startActivity(intent);
 
-                    }
-                });
-                break;
-            case 4:
-                buttonTxt="已满标";
-                buttonBg="#0e99da";
-                break;
-            case 5:
-                buttonTxt="还款中";
-                buttonBg="#0e99da";
-                break;
-            case 6:
-                buttonTxt="已还完";
-                buttonBg="#CCCCCC";
-                break;
-            default:
-                buttonTxt="预审中";
-                buttonBg="#CCCCCC";
-                break;
+                        }
+                    });
+                    break;
+                case 4:
+                    buttonTxt = "已满标";
+                    buttonBg = "#0e99da";
+                    break;
+                case 5:
+                    buttonTxt = "还款中";
+                    buttonBg = "#0e99da";
+                    break;
+                case 6:
+                    buttonTxt = "已还完";
+                    buttonBg = "#CCCCCC";
+                    break;
+                default:
+                    buttonTxt = "预审中";
+                    buttonBg = "#CCCCCC";
+                    break;
             }
             holder.borrowBtn.setText(buttonTxt);
             //holder.borrowBtn.setBackgroundColor(buttonBg);
@@ -365,8 +339,7 @@ public class ProjectListActivity extends Activity
         }
     }
 
-    static class ViewHolder
-    {
+    static class ViewHolder {
         @InjectView(R.id.name_tv)
         TextView name;
 
@@ -391,32 +364,29 @@ public class ProjectListActivity extends Activity
         @InjectView(R.id.flag_tv)
         TextView flag;
 
-        public ViewHolder(View view)
-        {
-            ButterKnife.inject(this,view);
+        public ViewHolder(View view) {
+            ButterKnife.inject(this, view);
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_common, menu);
+        getMenuInflater().inflate(R.menu.menu_common, menu);
         return true;
     }
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         //add top-left icon click event deal
-        switch(item.getItemId())
-        {
-        case android.R.id.home:
-            finish();
-            break;
-        case R.id.action_refresh:
-            new RefreshTask().execute();
-            break;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.action_refresh:
+                new RefreshTask().execute();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
