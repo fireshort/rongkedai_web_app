@@ -2,6 +2,7 @@ package com.rongkedai.ui;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
@@ -16,8 +17,10 @@ import com.rongkedai.misc.Setting;
 import com.rongkedai.misc.Urls;
 import com.yuexiaohome.framework.exception.AppException;
 import com.yuexiaohome.framework.lib.AsyncTaskEx;
+import com.yuexiaohome.framework.util.L;
 import com.yuexiaohome.framework.util.Utils;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 
@@ -80,12 +83,13 @@ public class ProjectNoticeListActivity extends ActionBarActivity
                 View child1 = listView.getChildAt(0);
                 ViewGroup.LayoutParams glp = child1.getLayoutParams();
                 int top = child1.getTop();
-                if (glp instanceof ViewGroup.MarginLayoutParams) {
-                    ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) glp;
+                if(glp instanceof ViewGroup.MarginLayoutParams) {
+                    ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)glp;
                     return top == mlp.topMargin + listView.getPaddingTop();
                 } else {
                     return top == listView.getPaddingTop();
                 }
+               //return PtrDefaultHandler.checkContentCanBePulledDown(frame,content,header);
             }
         });
         ptrFrame.postDelayed(new Runnable() {
