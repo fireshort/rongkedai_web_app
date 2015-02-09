@@ -56,7 +56,7 @@ public class WebViewActivity extends ActionBarActivity
         {
             WebViewActivity.this.setProgressBarIndeterminateVisibility(false);
             super.onPageFinished(view,url);
-            String javascript="javascript:document.getElementsByTagName('img')[0].onclick=function(){rkd.showImg(this.src);};document.getElementsByTagName('footer')[0].style.display = 'none';javascript:document.getElementsByClassName('header')[0].style.display = 'none';javascript:document.getElementsByClassName('banner')[0].style.display = 'none';void(0)";
+            String javascript="javascript:var elements=document.getElementsByTagName('img');for(var i=0;i<elements.length;i++)elements[i].onclick=function(){rkd.showImg(this.src);};document.getElementsByTagName('footer')[0].style.display = 'none';javascript:document.getElementsByClassName('header')[0].style.display = 'none';javascript:document.getElementsByClassName('banner')[0].style.display = 'none';void(0)";
             view.loadUrl(javascript);
             ptrFrame.refreshComplete();
         }
@@ -234,13 +234,7 @@ public class WebViewActivity extends ActionBarActivity
         mWebView.setWebViewClient(mWebViewClient);
         mWebView.addJavascriptInterface(new UAJscriptHandler(this),"rkd");
 
-//        btnRefresh.setOnClickListener(new View.OnClickListener()
-//        {
-//            public void onClick(View v)
-//            {
-//                mWebView.reload();
-//            }
-//        });
+
 //        btnSignIn.setOnClickListener(new View.OnClickListener()
 //        {
 //            public void onClick(View v)
