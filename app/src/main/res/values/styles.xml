@@ -17,4 +17,17 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="FadeActivityAnimation">
+        <item name="android:activityCloseEnterAnimation">@null</item>
+        <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
+        <item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@null</item>
+    </style>
+
+    <style name="AppTheme.ImageActivity">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/image_activity_bg</item>
+        <item name="android:windowAnimationStyle">@style/FadeActivityAnimation</item>
+    </style>
+
 </resources>

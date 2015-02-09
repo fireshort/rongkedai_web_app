@@ -85,4 +85,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'in.srain.cube:ultra-ptr:1.0.7@aar'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+    compile 'com.github.chrisbanes.photoview:library:1.2.3'
 }

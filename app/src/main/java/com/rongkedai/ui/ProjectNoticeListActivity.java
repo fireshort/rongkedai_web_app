@@ -2,7 +2,6 @@ package com.rongkedai.ui;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
@@ -17,10 +16,8 @@ import com.rongkedai.misc.Setting;
 import com.rongkedai.misc.Urls;
 import com.yuexiaohome.framework.exception.AppException;
 import com.yuexiaohome.framework.lib.AsyncTaskEx;
-import com.yuexiaohome.framework.util.L;
 import com.yuexiaohome.framework.util.Utils;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 
@@ -98,6 +95,7 @@ public class ProjectNoticeListActivity extends ActionBarActivity
                 ptrFrame.autoRefresh();
             }
         }, 100);
+        ptrFrame.setInterceptEventWhileWorking(false);
 
     }
 
@@ -114,7 +112,7 @@ public class ProjectNoticeListActivity extends ActionBarActivity
 //        startActivity(intent);
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra("url", Urls.PROJECT_NOTICE_DETAIL_WEB + id);
-        intent.putExtra("useWideViewPort", false);
+        //intent.putExtra("useWideViewPort", false);
         startActivity(intent);
     }
 

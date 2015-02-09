@@ -1,20 +1,21 @@
 package com.rongkedai;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.*;
 import android.webkit.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.yuexiaohome.framework.util.L;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 
-public class WebViewActivity extends Activity
+public class WebViewActivity extends ActionBarActivity
 {
     @InjectView(R.id.webview)
     WebView mWebView;
@@ -45,6 +46,7 @@ public class WebViewActivity extends Activity
         @Override
         public boolean shouldOverrideUrlLoading(WebView view,String url)
         {
+            L.d("url:"+url);
             mWebView.loadUrl(url);
             return true;
         }
@@ -54,7 +56,7 @@ public class WebViewActivity extends Activity
         {
             WebViewActivity.this.setProgressBarIndeterminateVisibility(false);
             super.onPageFinished(view,url);
-            String javascript="javascript:document.getElementsByTagName('footer')[0].style.display = 'none';javascript:document.getElementsByClassName('header')[0].style.display = 'none';javascript:document.getElementsByClassName('banner')[0].style.display = 'none';void(0)";
+            String javascript="javascript:document.getElementsByTagName('img')[0].onclick=function(){rkd.showImg(this.src);};document.getElementsByTagName('footer')[0].style.display = 'none';javascript:document.getElementsByClassName('header')[0].style.display = 'none';javascript:document.getElementsByClassName('banner')[0].style.display = 'none';void(0)";
             view.loadUrl(javascript);
             ptrFrame.refreshComplete();
         }
@@ -230,7 +232,7 @@ public class WebViewActivity extends Activity
 
         mWebView.setWebChromeClient(mChromeClient);
         mWebView.setWebViewClient(mWebViewClient);
-        // mWebView.addJavascriptInterface(new UAJscriptHandler(this),"bms");
+        mWebView.addJavascriptInterface(new UAJscriptHandler(this),"rkd");
 
 //        btnRefresh.setOnClickListener(new View.OnClickListener()
 //        {
@@ -289,17 +291,24 @@ public class WebViewActivity extends Activity
         mWebView.loadUrl(url);
     }
 
-    private void updateData() {
-        String url=getIntent().getStringExtra("url");
-        mWebView.loadUrl(url);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_common, menu);
+        return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //add top-left icon click event deal
-        switch(item.getItemId()){
-        case android.R.id.home:
-            finish();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.action_refresh:
+                mWebView.reload();
+                break;
         }
 
         return super.onOptionsItemSelected(item);

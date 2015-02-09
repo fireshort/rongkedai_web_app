@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.webkit.JavascriptInterface;
+import com.rongkedai.ui.LargeImageActivity;
+import com.yuexiaohome.framework.util.L;
 
 public class UAJscriptHandler
 {
@@ -40,5 +43,14 @@ public class UAJscriptHandler
     {
         // BMSApplication app=(BMSApplication)context.getApplicationContext();
         // app.setSearchTerm(searchTerm);
+    }
+
+    @JavascriptInterface
+    public void showImg(String imgUrl)
+    {
+        L.d("imgUrl:"+imgUrl);
+        Intent intent = new Intent(context, LargeImageActivity.class);
+        intent.putExtra("imgUrl", imgUrl);
+        context.startActivity(intent);
     }
 }
