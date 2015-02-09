@@ -14,13 +14,6 @@
         <ListView
                 android:listSelector="@drawable/list_view_fg_slr"
                 android:drawSelectorOnTop="true"
-                android:scrollbarStyle="outsideOverlay"
-                android:clipToPadding="false"
-                android:paddingBottom="20dp"
-                android:numColumns="1"
-                android:stretchMode="columnWidth"
-                android:horizontalSpacing="10dp"
-                android:verticalSpacing="10dp"
                 android:id="@+id/project_list_lv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

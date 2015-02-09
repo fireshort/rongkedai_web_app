@@ -16,7 +16,10 @@
 #   public *;
 #}
 
+
 -dontwarn c.t.m.g.**
+
+-dontwarn in.srain.**
 -keepclassmembers class ** {
     public void onEvent*(**);
 }
@@ -32,3 +35,5 @@
 -keepclasseswithmembernames class * {
     @butterknife.* <methods>;
 }
+
+
