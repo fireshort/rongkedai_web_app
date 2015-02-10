@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.*;
 import android.webkit.*;
 import butterknife.ButterKnife;
@@ -23,7 +22,7 @@ public class WebViewActivity extends ActionBarActivity
     @InjectView(R.id.ptr_frame)
     PtrClassicFrameLayout ptrFrame;
 
-    private static final String LOG_TAG="WebViewActivity";
+    private boolean enlargePic=true;
 
     private final WebViewClient mWebViewClient=new WebViewClient()
     {
@@ -41,7 +40,10 @@ public class WebViewActivity extends ActionBarActivity
         {
             WebViewActivity.this.setProgressBarIndeterminateVisibility(false);
             super.onPageFinished(view,url);
-            String javascript="javascript:var elements=document.getElementsByTagName('img');for(var i=0;i<elements.length;i++)elements[i].onclick=function(){rkd.showImg(this.src);};document.getElementsByTagName('footer')[0].style.display = 'none';javascript:document.getElementsByClassName('header')[0].style.display = 'none';javascript:document.getElementsByClassName('banner')[0].style.display = 'none';void(0)";
+            String javascript="javascript:document.getElementsByTagName('footer')[0].style.display = 'none';javascript:document.getElementsByClassName('header')[0].style.display = 'none';javascript:document.getElementsByClassName('banner')[0].style.display = 'none';void(0)";
+            if(enlargePic)
+                javascript="javascript:var elements=document.getElementsByTagName('img');for(var i=0;i<elements.length;i++)elements[i].onclick=function(){rkd.showImg(this.src);};"
+                        +javascript;
             view.loadUrl(javascript);
             ptrFrame.refreshComplete();
         }
@@ -136,7 +138,7 @@ public class WebViewActivity extends ActionBarActivity
         @Override
         public boolean onJsAlert(WebView view,String url,String message,JsResult result)
         {
-            Log.d(LOG_TAG,String.format("WebView JsAlert message = %s",url,message));
+            L.d(String.format("WebView JsAlert message = %s",url,message));
             return false;
         }
 
@@ -215,6 +217,7 @@ public class WebViewActivity extends ActionBarActivity
         settings.setUseWideViewPort(useWideViewPort);
         settings.setLoadWithOverviewMode(true);
 
+        mWebView.setBackgroundColor(0x000000);
         mWebView.setWebChromeClient(mChromeClient);
         mWebView.setWebViewClient(mWebViewClient);
         mWebView.addJavascriptInterface(new UAJscriptHandler(this),"rkd");
@@ -264,9 +267,9 @@ public class WebViewActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
 
         this.initSettings();
+        enlargePic=getIntent().getBooleanExtra("enlargePic",true);
         String url=getIntent().getStringExtra("url");
         //String url="https://www.rongkedai.com/wapborrow/nav.jhtml";// intent.getStringExtra("url");
-
         mWebView.loadUrl(url);
     }
 

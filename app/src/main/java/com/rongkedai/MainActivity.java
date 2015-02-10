@@ -64,6 +64,7 @@ public class MainActivity extends Activity {
                 break;
             case R.id.signin_tv:
                 intent = new Intent(this, WebViewActivity.class);
+                intent.putExtra("enlargePic",false);
                 intent.putExtra("url", Urls.SIGNIN_WEB);
                 startActivity(intent);
                 break;
