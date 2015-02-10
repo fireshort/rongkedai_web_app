@@ -28,4 +28,12 @@ public class Urls
     public static final String PROJECT_NOTICE_LIST=HOST+"wapNewsNotices/newsList.jhtml?type=6";
 
     public static final String PROJECT_NOTICE_DETAIL_WEB=HOST+"wapNewsNotices/newsNotices.jhtml?id=";
+
+    public static final String AD_PIC_1=HOST+"mobile/wap/assets/images/change/bannner2501.jpg";
+    public static final String AD_PIC_2=HOST+"mobile/wap/assets/images/change/bannner2502.jpg";
+    public static final String AD_PIC_3=HOST+"mobile/wap/assets/images/change/bannner2503.jpg";
+    public static final String AD_PIC_4=HOST+"mobile/wap/assets/images/change/bannner2504.jpg";
+    public static final String AD_PIC_5=HOST+"mobile/wap/assets/images/change/bannner2505.jpg";
+
+
 }

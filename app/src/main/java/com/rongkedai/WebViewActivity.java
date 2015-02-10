@@ -23,21 +23,6 @@ public class WebViewActivity extends ActionBarActivity
     @InjectView(R.id.ptr_frame)
     PtrClassicFrameLayout ptrFrame;
 
-//    @InjectView(R.id.btnRefresh)
-//    ImageButton btnRefresh;
-//
-//    @InjectView(R.id.btnSignIn)
-//    ImageButton btnSignIn;
-//
-//    @InjectView(R.id.btnNotice)
-//    ImageButton btnNotice;
-//
-//    @InjectView(R.id.btnBorrow)
-//    ImageButton btnBorrow;
-//
-//    @InjectView(R.id.btnAccount)
-//    ImageButton btnAccount;
-
     private static final String LOG_TAG="WebViewActivity";
 
     private final WebViewClient mWebViewClient=new WebViewClient()

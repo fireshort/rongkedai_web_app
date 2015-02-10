@@ -24,7 +24,7 @@
         <activity
                 android:theme="@style/AppTheme.ImageActivity"
                 android:name=".ui.LargeImageActivity"
-                android:screenOrientation="portrait"/>
+                />
         <activity android:name="com.rongkedai.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

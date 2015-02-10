@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AspectFrameLayout">
+        <attr name="ratio" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="AspectImageView">
+        <attr name="img_ratio" format="string" />
+    </declare-styleable>
+    <declare-styleable name="ProgressButton">
+        <attr name="loadingDrawableLeft" format="reference" />
+        <attr name="loadingDrawableTop" format="reference" />
+        <attr name="loadingDrawableRight" format="reference" />
+        <attr name="loadingDrawableBottom" format="reference" />
+        <attr name="loadingText" format="reference|string" />
+        <attr name="loading" format="reference|boolean" />
+        <attr name="autoDisableClickable" format="reference|boolean" />
+    </declare-styleable>
+    <declare-styleable name="NavigationBar">
+        <attr name="titleTextAppearance" format="reference" />
+        <attr name="title" />
+        <attr name="navigationIcon" format="reference" />
+        <attr name="navigationContentDescription" format="string|reference" />
+        <attr name="theme" format="reference" />
+        <attr name="itemSpacing" format="dimension|reference" />
+    </declare-styleable>
+    <attr name="navigationBarItemStyle" format="reference" />
+</resources>
