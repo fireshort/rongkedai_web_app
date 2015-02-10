@@ -1,9 +1,11 @@
 package com.rongkedai;
 
 import android.app.ActionBar;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.*;
@@ -11,6 +13,7 @@ import android.webkit.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.yuexiaohome.framework.util.L;
+import com.yuexiaohome.framework.util.Toaster;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
@@ -170,6 +173,7 @@ public class WebViewActivity extends ActionBarActivity {
         });
 
         WebSettings settings = mWebView.getSettings();
+        settings.setDefaultTextEncodingName("utf-8");
         settings.setJavaScriptEnabled(true);
         // 启用localStorage 和 SessionStorage
         settings.setDomStorageEnabled(true);
@@ -255,7 +259,7 @@ public class WebViewActivity extends ActionBarActivity {
             mWebView.loadUrl(url);
         else{
             String data=getIntent().getStringExtra("data");
-            L.d("data:"+data);
+            L.d("data:" + data);
             mWebView.loadData(data, "text/html; charset=UTF-8",null);
         }
     }
@@ -264,6 +268,13 @@ public class WebViewActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_common, menu);
+
+        MenuItem locationItem = menu.add(0, R.id.action_copyurl, 0, "复制链接进剪贴板");
+        //locationItem.setIcon(R.drawable.ic_action_location);
+
+        // Need to use MenuItemCompat methods to call any action item related methods
+        MenuItemCompat.setShowAsAction(locationItem, MenuItem.SHOW_AS_ACTION_NEVER);
+
         return true;
     }
 
@@ -278,6 +289,14 @@ public class WebViewActivity extends ActionBarActivity {
             case R.id.action_refresh:
                 mWebView.reload();
                 break;
+            case R.id.action_copyurl:
+                //获取剪贴板管理服务
+                ClipboardManager cm =(ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
+//将文本数据复制到剪贴板
+                cm.setText(mWebView.getUrl());
+                Toaster.showLong(this,"成功复制。");
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);

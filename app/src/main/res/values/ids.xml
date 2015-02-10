@@ -20,5 +20,6 @@
         Generate an id which can be used when the location menu item is added in MainActivity
     -->
     <item name="action_about" type="id"/>
+    <item name="action_copyurl" type="id"/>
 
 </resources>
