@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">融科贷</string>
     <string name="hello_world">Hello world!</string>
+    <string name="remark">该App是Ivan出于熟悉Android和方便自己而开发。虽然已尽力消除错误，仍可能出错。如果你有意见反馈，请发邮件到ivan4u@gmail.com。</string>
 </resources>

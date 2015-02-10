@@ -3,6 +3,9 @@ package com.rongkedai;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
@@ -81,5 +84,33 @@ public class MainActivity extends Activity {
 
         }
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        //getMenuInflater().inflate(R.menu.menu_common, menu);
+
+        // It is also possible add items here. Use a generated id from
+        // resources (ids.xml) to ensure that all menu ids are distinct.
+        MenuItem locationItem = menu.add(0, R.id.action_about, 0, "说明");
+        //locationItem.setIcon(R.drawable.ic_action_location);
+
+        // Need to use MenuItemCompat methods to call any action item related methods
+        MenuItemCompat.setShowAsAction(locationItem, MenuItem.SHOW_AS_ACTION_NEVER);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_about:
+                Intent intent = new Intent(this, WebViewActivity.class);
+                intent.putExtra("data", getString(R.string.remark));
+                startActivity(intent);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
