@@ -9,7 +9,6 @@ import android.widget.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.rongkedai.R;
-import com.rongkedai.WebViewActivity;
 import com.rongkedai.bean.NoticeBean;
 import com.rongkedai.dao.ProjectNoticeListDao;
 import com.rongkedai.misc.Setting;

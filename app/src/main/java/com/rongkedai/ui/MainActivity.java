@@ -1,4 +1,4 @@
-package com.rongkedai;
+package com.rongkedai.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,11 +13,10 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rongkedai.R;
 import com.rongkedai.bean.AccountBean;
 import com.rongkedai.dao.MyAccountDao;
 import com.rongkedai.misc.Urls;
-import com.rongkedai.ui.ProjectListActivity;
-import com.rongkedai.ui.ProjectNoticeListActivity;
 import com.yuexiaohome.framework.exception.AppException;
 import com.yuexiaohome.framework.lib.AsyncTaskEx;
 import com.yuexiaohome.framework.util.L;

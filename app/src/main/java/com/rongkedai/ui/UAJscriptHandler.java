@@ -1,11 +1,10 @@
-package com.rongkedai;
+package com.rongkedai.ui;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
-import com.rongkedai.ui.LargeImageActivity;
 import com.yuexiaohome.framework.util.L;
 import com.yuexiaohome.framework.util.Toaster;
 

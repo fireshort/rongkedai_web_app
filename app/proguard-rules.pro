@@ -14,12 +14,15 @@
 # class:
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
-#}
 
+-keepclassmembers class com.rongkedai.ui.UAJscriptHandler{
+   public *;
+}
 
 -dontwarn c.t.m.g.**
 
 -dontwarn in.srain.**
+
 -keepclassmembers class ** {
     public void onEvent*(**);
 }
@@ -35,5 +38,4 @@
 -keepclasseswithmembernames class * {
     @butterknife.* <methods>;
 }
-
 

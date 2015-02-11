@@ -1,4 +1,4 @@
-package com.rongkedai;
+package com.rongkedai.ui;
 
 import android.app.ActionBar;
 import android.content.ClipboardManager;
@@ -12,6 +12,7 @@ import android.view.*;
 import android.webkit.*;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.rongkedai.R;
 import com.yuexiaohome.framework.util.L;
 import com.yuexiaohome.framework.util.Toaster;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
