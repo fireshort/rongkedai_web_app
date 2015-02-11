@@ -36,4 +36,5 @@ public class Urls
     public static final String AD_PIC_5=HOST+"mobile/wap/assets/images/change/bannner2505.jpg";
 
 
+    public static final String MY_ACCOUNT=HOST+"wapaccount/myaccount.jhtml";
 }

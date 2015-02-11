@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public final class Setting
-{
+public final class Setting {
 
     public static final int ITEMS_PER_PAGE = 10;
 

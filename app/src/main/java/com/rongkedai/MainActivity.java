@@ -13,10 +13,15 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rongkedai.bean.AccountBean;
+import com.rongkedai.dao.MyAccountDao;
 import com.rongkedai.misc.Urls;
 import com.rongkedai.ui.ProjectListActivity;
 import com.rongkedai.ui.ProjectNoticeListActivity;
+import com.yuexiaohome.framework.exception.AppException;
+import com.yuexiaohome.framework.lib.AsyncTaskEx;
 import com.yuexiaohome.framework.util.L;
+import com.yuexiaohome.framework.util.Toaster;
 
 public class MainActivity extends Activity {
     static String[] adPics = {Urls.AD_PIC_1, Urls.AD_PIC_2, Urls.AD_PIC_3, Urls.AD_PIC_4, Urls.AD_PIC_5};
@@ -40,6 +45,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+        //new MyAccountTask().execute();
     }
 
     @OnClick({R.id.borrow_tv, R.id.project_notice_tv, R.id.website_notice_view, R.id.signin_tv, R.id.about_tv, R.id.discussion_tv, R.id.account_tv})
@@ -112,5 +118,31 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    class MyAccountTask extends AsyncTaskEx<Void, Void, AccountBean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //MainActivity.this.setProgressBarIndeterminateVisibility(true);
+        }
+
+        @Override
+        protected AccountBean doInBackground(Void... params) {
+            MyAccountDao dao = new MyAccountDao();
+            try {
+                return dao.doAction();
+            } catch (AppException e) {
+                setFailure(e);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(AccountBean accountBean) {
+            Toaster.showLong(MainActivity.this, accountBean.getUsername());
+
+        }
     }
 }
