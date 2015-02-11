@@ -1,9 +1,9 @@
 package com.rongkedai.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -22,7 +22,7 @@ import com.yuexiaohome.framework.lib.AsyncTaskEx;
 import com.yuexiaohome.framework.util.L;
 import com.yuexiaohome.framework.util.Toaster;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
     static String[] adPics = {Urls.AD_PIC_1, Urls.AD_PIC_2, Urls.AD_PIC_3, Urls.AD_PIC_4, Urls.AD_PIC_5};
 
     @InjectView(R.id.ad_iv)
