@@ -2,24 +2,29 @@ package com.rongkedai.ui;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import com.nostra13.universalimageloader.cache.disc.DiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.rongkedai.R;
 import com.yuexiaohome.framework.util.L;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
+import java.io.File;
 
-public class LargeImageActivity extends Activity implements PhotoViewAttacher
-        .OnMatrixChangedListener {
+
+public class LargeImageActivity extends Activity {
 
     private PhotoViewAttacher mAttacher;
     private ImageView mImageView;
@@ -31,9 +36,9 @@ public class LargeImageActivity extends Activity implements PhotoViewAttacher
         mImageView = (ImageView) findViewById(R.id.image_view);
         mAttacher = new PhotoViewAttacher(mImageView);
         mAttacher.setOnDoubleTapListener(mTapListener);
-        mAttacher.setOnMatrixChangeListener(LargeImageActivity.this);
+        //mAttacher.setOnMatrixChangeListener(LargeImageActivity.this);
 
-        String url = getIntent().getStringExtra("imgUrl");
+        final String url = getIntent().getStringExtra("imgUrl");
         L.d("url:" + url);
 
         if (url == null)
@@ -46,7 +51,34 @@ public class LargeImageActivity extends Activity implements PhotoViewAttacher
                         //.showImageForEmptyUri(R.drawable.ic_launcher)//设置图片Uri为空或是错误的时候显示的图片
                         //.showImageOnFail(R.drawable.ic_launcher)
                         .cacheOnDisk(true).cacheInMemory(true).build();
-        ImageLoader.getInstance().displayImage(url, mImageView, options);
+        ImageLoader.getInstance().loadImage(url, options, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                L.d("onLoadingComplete...1624");
+                DiskCache diskCache = ImageLoader.getInstance().getDiskCache();
+                File file = diskCache.get(url);
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+                mImageView.setLayoutParams(lp);
+                mImageView.setImageBitmap(bitmap);
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+
+            }
+        });
+        //ImageLoader.getInstance().displayImage(url, mImageView, options);
 
 
         mAttacher.update();
@@ -110,6 +142,7 @@ public class LargeImageActivity extends Activity implements PhotoViewAttacher
         }
     };
 
+    /*
     @Override
     public void onMatrixChanged(RectF rectF) {
         if (rectF.isEmpty())
@@ -132,5 +165,5 @@ public class LargeImageActivity extends Activity implements PhotoViewAttacher
         if (scaleX > scaleY)
             mAttacher.setScale(scaleX, mImageView.getWidth() / 2, 0, false);
 
-    }
+    }*/
 }
