@@ -8,7 +8,7 @@
             android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ad_iv" />
+            android:id="@+id/ad_iv"/>
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -18,31 +18,17 @@
                 android:layout_height="match_parent"
                 >
 
+
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="投资理财"
-                    android:id="@+id/borrow_tv"
-                    android:gravity="center"
-                    android:background="#134d82"
-                    android:textColor="@android:color/white"
-                    android:padding="5dp"
-                    android:layout_marginTop="1dp"
-                    android:textSize="14sp"
-                    android:drawablePadding="20dp"
-                    android:drawableLeft="@drawable/icon06"
-                    android:drawableRight="@drawable/right_arrow"
-                    />
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="发标公告"
+                    android:text="发标预告"
                     android:id="@+id/project_notice_tv"
                     android:gravity="center"
                     android:background="#dc8d25"
                     android:textColor="@android:color/white"
                     android:padding="5dp"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="20dp"
                     android:textSize="14sp"
                     android:drawablePadding="20dp"
                     android:drawableLeft="@drawable/icon10"
@@ -61,7 +47,7 @@
                     android:textSize="14sp"
                     android:drawablePadding="20dp"
                     android:drawableLeft="@drawable/icon09"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="10dp"
                     android:drawableRight="@drawable/right_arrow"
                     />
             <TextView
@@ -76,7 +62,22 @@
                     android:textSize="14sp"
                     android:drawablePadding="20dp"
                     android:drawableLeft="@drawable/icon08"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="10dp"
+                    android:drawableRight="@drawable/right_arrow"
+                    />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="投资理财"
+                    android:id="@+id/borrow_tv"
+                    android:gravity="center"
+                    android:background="#134d82"
+                    android:textColor="@android:color/white"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"
+                    android:drawablePadding="20dp"
+                    android:drawableLeft="@drawable/icon06"
                     android:drawableRight="@drawable/right_arrow"
                     />
 
@@ -92,7 +93,7 @@
                     android:textSize="14sp"
                     android:drawablePadding="20dp"
                     android:drawableLeft="@drawable/icon03"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="10dp"
                     android:drawableRight="@drawable/right_arrow"
                     />
             <TextView
@@ -107,7 +108,7 @@
                     android:textSize="14sp"
                     android:drawablePadding="20dp"
                     android:drawableLeft="@drawable/icon04"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="10dp"
                     android:drawableRight="@drawable/right_arrow"
                     />
 
@@ -123,7 +124,7 @@
                     android:textSize="14sp"
                     android:drawablePadding="20dp"
                     android:drawableLeft="@drawable/icon05"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="10dp"
                     android:drawableRight="@drawable/right_arrow"
                     />
 

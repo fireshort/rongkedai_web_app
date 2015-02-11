@@ -11,6 +11,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.nostra13.universalimageloader.cache.disc.DiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -27,13 +30,20 @@ import java.io.File;
 public class LargeImageActivity extends Activity {
 
     private PhotoViewAttacher mAttacher;
-    private ImageView mImageView;
+
+    @InjectView(R.id.image_view)
+    ImageView mImageView;
+
+    @InjectView(R.id.image_loading_pb)
+    ProgressBar imageLoadingPB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_activity);
-        mImageView = (ImageView) findViewById(R.id.image_view);
+        ButterKnife.inject(this);
+
         mAttacher = new PhotoViewAttacher(mImageView);
         mAttacher.setOnDoubleTapListener(mTapListener);
         //mAttacher.setOnMatrixChangeListener(LargeImageActivity.this);
@@ -71,6 +81,7 @@ public class LargeImageActivity extends Activity {
                 FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
                 mImageView.setLayoutParams(lp);
                 mImageView.setImageBitmap(bitmap);
+                imageLoadingPB.setVisibility(View.GONE);
             }
 
             @Override
@@ -79,7 +90,6 @@ public class LargeImageActivity extends Activity {
             }
         });
         //ImageLoader.getInstance().displayImage(url, mImageView, options);
-
 
         mAttacher.update();
     }
