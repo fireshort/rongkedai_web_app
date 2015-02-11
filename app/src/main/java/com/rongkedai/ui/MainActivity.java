@@ -93,7 +93,7 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_common, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 
         // It is also possible add items here. Use a generated id from
         // resources (ids.xml) to ensure that all menu ids are distinct.
@@ -108,13 +108,26 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(this, WebViewActivity.class);
         switch (item.getItemId()) {
             case R.id.action_about:
-                Intent intent = new Intent(this, WebViewActivity.class);
                 intent.putExtra("data", getString(R.string.remark));
-                startActivity(intent);
                 break;
+            case R.id.action_recharge:
+                intent.putExtra("url",Urls.RECHARGE_WEB);
+                break;
+            case R.id.action_take_cash:
+                intent.putExtra("url",Urls.TAKE_CASH_WEB);
+                break;
+            case R.id.action_auto_bid:
+                intent.putExtra("url",Urls.AUTO_BID_WEB);
+                break;
+            case R.id.action_rongkebao:
+                intent.putExtra("url",Urls.RONGKEBAO_web);
+                break;
+
         }
+        startActivity(intent);
 
         return super.onOptionsItemSelected(item);
     }

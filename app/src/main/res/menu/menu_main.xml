@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+        >
+    <item android:id="@+id/action_recharge"
+          android:icon="@drawable/recharge"
+          android:title="我要充值"
+          app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_take_cash"
+          android:icon="@drawable/takecash"
+          android:title="我要提现"
+          app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_auto_bid"
+          android:icon="@drawable/autobid"
+          android:title="自动设置"
+          app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_rongkebao"
+          android:icon="@drawable/rongkebao"
+          android:title="我的融科宝"
+          app:showAsAction="ifRoom"/>
+
+</menu>
