@@ -34,7 +34,12 @@ public class WebViewActivity extends ActionBarActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             L.d("url:" + url);
-            mWebView.loadUrl(url);
+            if(url.startsWith("tel:"))
+            {
+                Intent intent=new Intent(Intent.ACTION_DIAL,Uri.parse(url));
+                startActivity(intent);
+            }
+            else mWebView.loadUrl(url);
             return true;
         }
 
