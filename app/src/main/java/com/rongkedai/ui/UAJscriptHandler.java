@@ -52,4 +52,15 @@ public class UAJscriptHandler {
         L.d("value:"+value);
         Toaster.showLong(context, value);
     }
+
+    @JavascriptInterface
+    public void settingPageTitle(String pageTitle) {
+        L.d("pageTitle:"+pageTitle);
+//        if(context instanceof ActionBarActivity)
+//        {
+//            ActionBarActivity actionBarActivity= (ActionBarActivity) context;
+//            actionBarActivity.getActionBar().setTitle(pageTitle);
+//        }
+        //Toaster.showLong(context, pageTitle);
+    }
 }

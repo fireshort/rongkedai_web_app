@@ -45,8 +45,10 @@ public class WebViewActivity extends ActionBarActivity {
             if (enlargePic)
                 javascript = "javascript:var elements=document.getElementsByTagName('img');for(var i=0;i<elements.length;i++)elements[i].onclick=function(){rkd.showImg(this.src);};"
                         + javascript;
+            javascript="javascript:rkd.settingPageTitle(document.getElementsByClassName('topic')[0].innerText);"+javascript;
             view.loadUrl(javascript);
             ptrFrame.refreshComplete();
+            //getActionBar().setTitle(Setting.pageTitle);
         }
 
         @Override

@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 public final class Setting {
 
+
     public static final int ITEMS_PER_PAGE = 10;
 
     public static final String KEY_NAME = "name";
