@@ -3,9 +3,10 @@ package com.rongkedai.ui;
 import android.app.ActionBar;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.*;
@@ -270,13 +271,13 @@ public class WebViewActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_common, menu);
+        getMenuInflater().inflate(R.menu.menu_webview, menu);
 
-        MenuItem locationItem = menu.add(0, R.id.action_copyurl, 0, "复制链接进剪贴板");
+//        MenuItem locationItem = menu.add(0, R.id.action_copyurl, 0, "复制链接进剪贴板");
         //locationItem.setIcon(R.drawable.ic_action_location);
 
         // Need to use MenuItemCompat methods to call any action item related methods
-        MenuItemCompat.setShowAsAction(locationItem, MenuItem.SHOW_AS_ACTION_NEVER);
+//        MenuItemCompat.setShowAsAction(locationItem, MenuItem.SHOW_AS_ACTION_NEVER);
 
         return true;
     }
@@ -298,6 +299,10 @@ public class WebViewActivity extends ActionBarActivity {
 //将文本数据复制到剪贴板
                 cm.setText(mWebView.getUrl());
                 Toaster.showLong(this,"成功复制。");
+                break;
+            case R.id.action_open_in_browser:
+                Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(mWebView.getUrl()));
+                startActivity(intent);
                 break;
 
         }

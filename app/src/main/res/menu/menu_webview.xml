@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+        >
+    <item android:id="@+id/action_refresh"
+          android:icon="@drawable/refresh"
+          android:title="刷新"
+          app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_copyurl"
+          android:icon="@drawable/refresh"
+          android:title="复制链接进剪贴板"
+          app:showAsAction="never"/>
+    <item android:id="@+id/action_open_in_browser"
+          android:icon="@drawable/refresh"
+          android:title="在浏览器中打开"
+          app:showAsAction="never"/>
+
+</menu>
