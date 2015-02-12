@@ -18,5 +18,9 @@
           android:icon="@drawable/rongkebao"
           android:title="我的融科宝"
           app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_redpocket"
+          android:icon="@drawable/redpocket"
+          android:title="我的红包"
+          app:showAsAction="ifRoom"/>
 
 </menu>

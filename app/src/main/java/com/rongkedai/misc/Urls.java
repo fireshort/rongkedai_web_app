@@ -32,7 +32,8 @@ public class Urls
     public static final String RECHARGE_WEB=HOST+"wappay/intoRecharge.jhtml";
     public static final String TAKE_CASH_WEB=HOST+"wapaccount/takeCashs.jhtml";
     public static final String AUTO_BID_WEB=HOST+"wapaccount/myBorrAutoBid.jhtml";
-    public static final String RONGKEBAO_web=HOST+"mobile/wap/account/my_rongkebao.jsp";
+    public static final String RONGKEBAO_WEB =HOST+"mobile/wap/account/my_rongkebao.jsp";
+    public static final String REDPOCKET_WEB=HOST+"mobile/wap/account/my_redpacket.jsp";
 
     public static final String AD_PIC_1=HOST+"mobile/wap/assets/images/change/bannner2501.jpg";
     public static final String AD_PIC_2=HOST+"mobile/wap/assets/images/change/bannner2502.jpg";

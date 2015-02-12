@@ -123,7 +123,10 @@ public class MainActivity extends ActionBarActivity {
                 intent.putExtra("url",Urls.AUTO_BID_WEB);
                 break;
             case R.id.action_rongkebao:
-                intent.putExtra("url",Urls.RONGKEBAO_web);
+                intent.putExtra("url",Urls.RONGKEBAO_WEB);
+                break;
+            case R.id.action_redpocket:
+                intent.putExtra("url",Urls.REDPOCKET_WEB);
                 break;
 
         }
