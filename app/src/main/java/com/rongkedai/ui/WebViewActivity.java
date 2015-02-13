@@ -30,17 +30,17 @@ public class WebViewActivity extends ActionBarActivity {
 
     private boolean enlargePic = true;
 
+    private String data = null;
+
     private final WebViewClient mWebViewClient = new WebViewClient() {
         // 处理页面导航
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             L.d("url:" + url);
-            if(url.startsWith("tel:"))
-            {
-                Intent intent=new Intent(Intent.ACTION_DIAL,Uri.parse(url));
+            if (url.startsWith("tel:")) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
                 startActivity(intent);
-            }
-            else mWebView.loadUrl(url);
+            } else mWebView.loadUrl(url);
             return true;
         }
 
@@ -52,7 +52,7 @@ public class WebViewActivity extends ActionBarActivity {
             if (enlargePic)
                 javascript = "javascript:var elements=document.getElementsByTagName('img');for(var i=0;i<elements.length;i++)elements[i].onclick=function(){rkd.showImg(this.src);};"
                         + javascript;
-            javascript="javascript:rkd.settingPageTitle(document.getElementsByClassName('topic')[0].innerText);"+javascript;
+            javascript = "javascript:rkd.settingPageTitle(document.getElementsByClassName('topic')[0].innerText);" + javascript;
             view.loadUrl(javascript);
             ptrFrame.refreshComplete();
             //getActionBar().setTitle(Setting.pageTitle);
@@ -70,7 +70,9 @@ public class WebViewActivity extends ActionBarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
-            mWebView.goBack();
+            if (data == null)
+                mWebView.goBack();
+            else onBackPressed();
             return true;
         }
 
@@ -170,8 +172,7 @@ public class WebViewActivity extends ActionBarActivity {
         ptrFrame.setPtrHandler(new PtrHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                //updateData();
-                mWebView.reload();
+                refresh();
             }
 
             @Override
@@ -218,37 +219,6 @@ public class WebViewActivity extends ActionBarActivity {
         mWebView.setWebViewClient(mWebViewClient);
         mWebView.addJavascriptInterface(new UAJscriptHandler(this), "rkd");
 
-
-//        btnSignIn.setOnClickListener(new View.OnClickListener()
-//        {
-//            public void onClick(View v)
-//            {
-//                mWebView.loadUrl(Urls.SIGNIN_WEB);
-//            }
-//        });
-//        btnNotice.setOnClickListener(new View.OnClickListener()
-//        {
-//            public void onClick(View v)
-//            {
-//                mWebView.loadUrl(Urls.PROJECT_NOTICE_WEB);
-//                btnNotice.setBackgroundColor(Color.GREEN);
-//            }
-//        });
-//        btnBorrow.setOnClickListener(new View.OnClickListener()
-//        {
-//            public void onClick(View v)
-//            {
-//                mWebView.loadUrl(Urls.PROJECT_LIST_WEB);
-//            }
-//        });
-//        btnAccount.setOnClickListener(new View.OnClickListener()
-//        {
-//            public void onClick(View v)
-//            {
-//                mWebView.loadUrl(Urls.ACCOUNT_WEB);
-//            }
-//        });
-
     }
 
     //@OnClick(R.id.btnHome)
@@ -273,10 +243,10 @@ public class WebViewActivity extends ActionBarActivity {
         //String url="https://www.rongkedai.com/wapborrow/nav.jhtml";// intent.getStringExtra("url");
         if (!TextUtils.isEmpty(url))
             mWebView.loadUrl(url);
-        else{
-            String data=getIntent().getStringExtra("data");
+        else {
+            data = getIntent().getStringExtra("data");
             L.d("data:" + data);
-            mWebView.loadData(data, "text/html; charset=UTF-8",null);
+            mWebView.loadDataWithBaseURL("file:///android_asset/", data, "text/html", "utf-8", null);
         }
 
         EventBus.getDefault().register(this);
@@ -305,23 +275,29 @@ public class WebViewActivity extends ActionBarActivity {
                 finish();
                 break;
             case R.id.action_refresh:
-                mWebView.reload();
+                refresh();
                 break;
             case R.id.action_copyurl:
                 //获取剪贴板管理服务
-                ClipboardManager cm =(ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipboardManager cm = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
 //将文本数据复制到剪贴板
                 cm.setText(mWebView.getUrl());
-                Toaster.showLong(this,"成功复制。");
+                Toaster.showLong(this, "成功复制。");
                 break;
             case R.id.action_open_in_browser:
-                Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(mWebView.getUrl()));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mWebView.getUrl()));
                 startActivity(intent);
                 break;
 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void refresh() {
+        if (data != null)
+            mWebView.loadDataWithBaseURL("file:///android_asset/", data, "text/html", "utf-8", null);
+        else mWebView.reload();
     }
 
     @SuppressWarnings("unused")
