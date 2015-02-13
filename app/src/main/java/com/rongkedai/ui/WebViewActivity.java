@@ -16,6 +16,7 @@ import butterknife.InjectView;
 import com.rongkedai.R;
 import com.yuexiaohome.framework.util.L;
 import com.yuexiaohome.framework.util.Toaster;
+import de.greenrobot.event.EventBus;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
@@ -257,6 +258,12 @@ public class WebViewActivity extends ActionBarActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -271,6 +278,8 @@ public class WebViewActivity extends ActionBarActivity {
             L.d("data:" + data);
             mWebView.loadData(data, "text/html; charset=UTF-8",null);
         }
+
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -313,6 +322,11 @@ public class WebViewActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("unused")
+    public void onEventMainThread(PageTitleEvent event) {
+        getSupportActionBar().setTitle(event.getPageTitle());
     }
 
 }

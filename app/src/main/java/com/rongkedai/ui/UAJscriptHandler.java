@@ -7,6 +7,7 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 import com.yuexiaohome.framework.util.L;
 import com.yuexiaohome.framework.util.Toaster;
+import de.greenrobot.event.EventBus;
 
 public class UAJscriptHandler {
     private final String tag = "UAJscriptHandler";
@@ -56,6 +57,9 @@ public class UAJscriptHandler {
     @JavascriptInterface
     public void settingPageTitle(String pageTitle) {
         L.d("pageTitle:"+pageTitle);
+        PageTitleEvent event=new PageTitleEvent();
+        event.setPageTitle(pageTitle);
+        EventBus.getDefault().post(event);
 //        if(context instanceof ActionBarActivity)
 //        {
 //            ActionBarActivity actionBarActivity= (ActionBarActivity) context;
