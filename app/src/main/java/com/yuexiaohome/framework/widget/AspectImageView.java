@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import com.rongkedai.R;
+import com.yuexiaohome.framework.util.L;
 
 
 public class AspectImageView extends ImageView {
@@ -37,10 +38,16 @@ public class AspectImageView extends ImageView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        L.d("widthMeasureSpec:"+widthMeasureSpec);
+        L.d("heightMeasureSpec:"+heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+
+        L.d("heightSize:"+heightSize);
+        L.d("widthSize:"+widthSize);
+
 
         if (mRatio <= 0) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -58,11 +65,18 @@ public class AspectImageView extends ImageView {
         int lockedWidth = widthSize - hPadding;
         int lockedHeight = heightSize - vPadding;
 
+        L.d("ratio:"+mRatio);
+        L.d("before:");
+        L.d("lockedWidth："+lockedWidth);
+        L.d("lockedHeight:"+lockedHeight);
         if (heightSize > 0 && (lockedWidth > heightSize * mRatio)) {
             lockedWidth = (int) (lockedHeight * mRatio + .5);
         } else {
             lockedHeight = (int) (lockedWidth / mRatio + .5);
         }
+        L.d("after:");
+        L.d("lockedWidth："+lockedWidth);
+        L.d("lockedHeight:" + lockedHeight);
 
         lockedWidth += hPadding;
         lockedHeight += vPadding;
