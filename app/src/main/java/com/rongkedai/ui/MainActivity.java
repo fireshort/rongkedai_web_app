@@ -32,8 +32,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
-        int picIndex=(int)(Math.random()*5);
-        L.d("pic index:"+picIndex);
+        int picIndex = (int) (Math.random() * 5);
+        L.d("pic index:" + picIndex);
         DisplayImageOptions options =
                 new DisplayImageOptions.Builder().cacheOnDisk(true).cacheInMemory(true).build();
         ImageLoader.getInstance().displayImage(adPics[picIndex], adIv, options);
@@ -72,7 +72,7 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case R.id.signin_tv:
                 intent = new Intent(this, WebViewActivity.class);
-                intent.putExtra("enlargePic",false);
+                intent.putExtra("enlargePic", false);
                 intent.putExtra("url", Urls.SIGNIN_WEB);
                 startActivity(intent);
                 break;
@@ -90,6 +90,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -114,19 +115,22 @@ public class MainActivity extends ActionBarActivity {
                 intent.putExtra("data", getString(R.string.remark));
                 break;
             case R.id.action_recharge:
-                intent.putExtra("url",Urls.RECHARGE_WEB);
+                intent.putExtra("url", Urls.RECHARGE_WEB);
                 break;
             case R.id.action_take_cash:
-                intent.putExtra("url",Urls.TAKE_CASH_WEB);
+                intent.putExtra("url", Urls.TAKE_CASH_WEB);
                 break;
             case R.id.action_auto_bid:
-                intent.putExtra("url",Urls.AUTO_BID_WEB);
+                intent.putExtra("url", Urls.AUTO_BID_WEB);
                 break;
             case R.id.action_rongkebao:
-                intent.putExtra("url",Urls.RONGKEBAO_WEB);
+                intent.putExtra("url", Urls.RONGKEBAO_WEB);
                 break;
             case R.id.action_redpocket:
-                intent.putExtra("url",Urls.REDPOCKET_WEB);
+                intent.putExtra("url", Urls.REDPOCKET_WEB);
+                break;
+            case R.id.action_getpocket:
+                intent.putExtra("url", Urls.GET_REDPOCKET_WEB);
                 break;
 
         }
