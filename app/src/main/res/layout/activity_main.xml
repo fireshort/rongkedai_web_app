@@ -81,6 +81,21 @@
                     android:drawableLeft="@drawable/icon06"
                     android:drawableRight="@drawable/right_arrow"
                     />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="抢克拉博"
+                    android:id="@+id/get_clubo_tv"
+                    android:gravity="center_vertical"
+                    android:background="#971320"
+                    android:textColor="@android:color/white"
+                    android:padding="5dp"
+                    android:layout_marginTop="1dp"
+                    android:textSize="14sp"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/clubo"
+                    android:drawableRight="@drawable/right_arrow"
+                    />
 
             <TextView
                     android:layout_width="match_parent"

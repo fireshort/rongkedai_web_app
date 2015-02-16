@@ -37,10 +37,19 @@ public class WebViewActivity extends ActionBarActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             L.d("url:" + url);
+            Intent intent;
             if (url.startsWith("tel:")) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
+                intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
                 startActivity(intent);
-            } else mWebView.loadUrl(url);
+            }
+            else if (url.startsWith("mailto:")) {
+                intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse(url));
+                intent.putExtra(Intent.EXTRA_SUBJECT, "意见反馈");
+                //intent.putExtra(Intent.EXTRA_TEXT, "这是内容");
+                startActivity(intent);
+            }
+            else mWebView.loadUrl(url);
             return true;
         }
 
