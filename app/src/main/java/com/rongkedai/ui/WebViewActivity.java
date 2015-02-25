@@ -220,6 +220,7 @@ public class WebViewActivity extends ActionBarActivity {
         settings.setSupportZoom(true);
         settings.setDisplayZoomControls(false);
         Boolean useWideViewPort = getIntent().getBooleanExtra("useWideViewPort", true);
+        L.d("useWideViewPort:"+useWideViewPort);
         settings.setUseWideViewPort(useWideViewPort);
         settings.setLoadWithOverviewMode(true);
 

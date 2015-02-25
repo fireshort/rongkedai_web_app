@@ -47,7 +47,7 @@ public class MainActivity extends ActionBarActivity {
         //new MyAccountTask().execute();
     }
 
-    @OnClick({R.id.borrow_tv, R.id.project_notice_tv, R.id.website_notice_view, R.id.signin_tv, R.id.about_tv, R.id.discussion_tv, R.id.account_tv, R.id.get_clubo_tv})
+    @OnClick({R.id.borrow_tv, R.id.project_notice_tv, R.id.website_notice_view, R.id.signin_tv, R.id.about_tv, R.id.discussion_tv, R.id.account_tv})
     public void launchActivity(TextView tv) {
         Intent intent;
         switch (tv.getId()) {
@@ -84,12 +84,6 @@ public class MainActivity extends ActionBarActivity {
             case R.id.account_tv:
                 intent = new Intent(this, WebViewActivity.class);
                 intent.putExtra("url", Urls.ACCOUNT_WEB);
-                startActivity(intent);
-                break;
-            case R.id.get_clubo_tv:
-                intent = new Intent(this, WebViewActivity.class);
-                //intent.putExtra("useWideViewPort",false);
-                intent.putExtra("url", Urls.GET_CLUBO_REDPOCKET_WEB);
                 startActivity(intent);
                 break;
 
