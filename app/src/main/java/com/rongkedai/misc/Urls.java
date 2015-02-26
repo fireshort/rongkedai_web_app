@@ -35,7 +35,6 @@ public class Urls
     public static final String RONGKEBAO_WEB =HOST+"mobile/wap/account/my_rongkebao.jsp";
     public static final String REDPOCKET_WEB=HOST+"mobile/wap/account/my_redpacket.jsp";
     public static final String GET_REDPOCKET_WEB=HOST+"mobile/wap/redbag/redpacketlist.jsp";
-    public static final String GET_CLUBO_REDPOCKET_WEB="http://dai.clubo.cn/Hongbao#kind=-1&state=1&id=1&word=";
 
     public static final String AD_PIC_1=HOST+"mobile/wap/assets/images/change/bannner2501.jpg";
     public static final String AD_PIC_2=HOST+"mobile/wap/assets/images/change/bannner2502.jpg";
@@ -43,6 +42,11 @@ public class Urls
     public static final String AD_PIC_4=HOST+"mobile/wap/assets/images/change/bannner2504.jpg";
     public static final String AD_PIC_5=HOST+"mobile/wap/assets/images/change/bannner2505.jpg";
 
+    public static final String AD_WEB_1=HOST+"wapNewsNotices/newsNotices.jhtml?id=5980";
+    public static final String AD_WEB_2=HOST+"mobile/wap/fans/rkd_fans.jsp";
+    public static final String AD_WEB_3=HOST+"wapNewsNotices/newsNotices.jhtml?id=5970";
+    public static final String AD_WEB_4=HOST+"wapNewsNotices/newsNotices.jhtml?id=5990";
+    public static final String AD_WEB_5=HOST+"wapNewsNotices/newsNotices.jhtml?id=5918";
 
     public static final String MY_ACCOUNT=HOST+"wapaccount/myaccount.jhtml";
 }

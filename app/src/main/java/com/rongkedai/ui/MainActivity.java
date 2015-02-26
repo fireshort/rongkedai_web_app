@@ -1,18 +1,30 @@
 package com.rongkedai.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import com.nostra13.universalimageloader.cache.disc.DiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.rongkedai.R;
 import com.rongkedai.bean.AccountBean;
 import com.rongkedai.dao.MyAccountDao;
@@ -21,22 +33,29 @@ import com.yuexiaohome.framework.exception.AppException;
 import com.yuexiaohome.framework.lib.AsyncTaskEx;
 import com.yuexiaohome.framework.util.L;
 import com.yuexiaohome.framework.util.Toaster;
+import com.yuexiaohome.framework.widget.AspectImageView;
+
+import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends ActionBarActivity {
     static String[] adPics = {Urls.AD_PIC_1, Urls.AD_PIC_2, Urls.AD_PIC_3, Urls.AD_PIC_4, Urls.AD_PIC_5};
+    static String[] adWebs = {Urls.AD_WEB_1, Urls.AD_WEB_2, Urls.AD_WEB_3, Urls.AD_WEB_4, Urls.AD_WEB_5};
 
-    @InjectView(R.id.ad_iv)
-    ImageView adIv;
+    @InjectView(R.id.ad_is)
+    ImageSwitcher adImageSwitcher;
+
+    private static int position = 0;
+    private static int lastPos = 0;
+
+    private Timer timer;
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        int picIndex = (int) (Math.random() * 5);
-        L.d("pic index:" + picIndex);
-        DisplayImageOptions options =
-                new DisplayImageOptions.Builder().cacheOnDisk(true).cacheInMemory(true).build();
-        ImageLoader.getInstance().displayImage(adPics[picIndex], adIv, options);
+    protected void onPause() {
+        timer.cancel();
+        timer = null;
+        super.onPause();
     }
 
     @Override
@@ -44,7 +63,91 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-        //new MyAccountTask().execute();
+
+        adImageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                AspectImageView imageView = new AspectImageView(MainActivity.this);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setRatio(3.2f, true);
+                imageView.setLayoutParams(new ImageSwitcher.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                return imageView;
+            }
+        });
+
+        adImageSwitcher.setInAnimation(AnimationUtils.loadAnimation(this,
+                android.R.anim.fade_in));
+        adImageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(this,
+                android.R.anim.fade_out));
+        final ImageView imageView = (ImageView) adImageSwitcher.getNextView();
+        imageView.setImageResource(R.drawable.adpic);
+        adImageSwitcher.showNext();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                final DisplayImageOptions options =
+                        new DisplayImageOptions.Builder().cacheOnDisk(true).cacheInMemory(true).build();
+
+                if (msg.what == 1) {
+                    if (position == lastPos) {
+                        final ImageView iv = (ImageView) adImageSwitcher.getNextView();
+                        final int currPos = position % adPics.length;
+                        L.d("position:" + currPos);
+
+                        final String url = adPics[currPos];
+                        ImageLoader.getInstance().loadImage(url, options, new ImageLoadingListener() {
+                            @Override
+                            public void onLoadingStarted(String imageUri, View view) {
+                            }
+
+                            @Override
+                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                DiskCache diskCache = ImageLoader.getInstance().getDiskCache();
+                                File file = diskCache.get(url);
+                                L.d("pic url:" + url);
+                                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                                iv.setImageBitmap(bitmap);
+                                iv.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+                                        L.d("position inside:" + currPos);
+                                        intent.putExtra("url", adWebs[currPos]);
+                                        L.d("page url:" + adWebs[currPos]);
+                                        startActivity(intent);
+                                    }
+                                });
+                                position++;
+                                lastPos++;
+                                adImageSwitcher.showNext();
+                            }
+
+                            @Override
+                            public void onLoadingCancelled(String imageUri, View view) {
+                            }
+                        });
+                    }
+                }
+            }
+        };
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.sendEmptyMessage(1);
+            }
+        }, 0, 4000);
     }
 
     @OnClick({R.id.borrow_tv, R.id.project_notice_tv, R.id.website_notice_view, R.id.signin_tv, R.id.about_tv, R.id.discussion_tv, R.id.account_tv})

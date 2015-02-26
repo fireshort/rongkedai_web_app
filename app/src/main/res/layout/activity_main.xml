@@ -4,13 +4,11 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
         >
-    <com.yuexiaohome.framework.widget.AspectImageView
-            android:scaleType="centerCrop"
-            app:img_ratio="3.2"
-            android:src="@drawable/adpic"
+    <ImageSwitcher
+            android:id="@+id/ad_is"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ad_iv"/>
+            />
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
