@@ -17,6 +17,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+
     <style name="FadeActivityAnimation">
         <item name="android:activityCloseEnterAnimation">@null</item>
         <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
@@ -28,6 +29,14 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/image_activity_bg</item>
         <item name="android:windowAnimationStyle">@style/FadeActivityAnimation</item>
+    </style>
+
+    <style name="MainText">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:drawableRight">@drawable/right_arrow</item>
     </style>
 
 </resources>

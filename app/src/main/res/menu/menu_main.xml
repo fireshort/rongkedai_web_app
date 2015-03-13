@@ -26,5 +26,9 @@
           android:icon="@drawable/redpocket"
           android:title="我的红包"
           app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_aboutrkd"
+          android:icon="@drawable/icon05"
+          android:title="关于融科贷"
+          app:showAsAction="ifRoom"/>
 
 </menu>

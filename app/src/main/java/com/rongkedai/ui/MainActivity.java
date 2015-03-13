@@ -150,7 +150,7 @@ public class MainActivity extends ActionBarActivity {
         }, 0, 4000);
     }
 
-    @OnClick({R.id.borrow_tv, R.id.project_notice_tv, R.id.website_notice_view, R.id.signin_tv, R.id.about_tv, R.id.discussion_tv, R.id.account_tv})
+    @OnClick({R.id.borrow_tv, R.id.project_notice_tv, R.id.website_notice_view, R.id.signin_tv, R.id.discussion_tv, R.id.account_tv})
     public void launchActivity(TextView tv) {
         Intent intent;
         switch (tv.getId()) {
@@ -162,11 +162,6 @@ public class MainActivity extends ActionBarActivity {
             case R.id.website_notice_view:
                 intent = new Intent(this, WebViewActivity.class);
                 intent.putExtra("url", Urls.WEBSITE_NOTICE_WEB);
-                startActivity(intent);
-                break;
-            case R.id.about_tv:
-                intent = new Intent(this, WebViewActivity.class);
-                intent.putExtra("url", Urls.ABOUT_US_WEB);
                 startActivity(intent);
                 break;
             case R.id.project_notice_tv:
@@ -235,6 +230,10 @@ public class MainActivity extends ActionBarActivity {
             case R.id.action_getpocket:
                 intent.putExtra("url", Urls.GET_REDPOCKET_WEB);
                 break;
+            case R.id.action_aboutrkd:
+                intent.putExtra("url", Urls.ABOUT_US_WEB);
+                break;
+
 
         }
         startActivity(intent);

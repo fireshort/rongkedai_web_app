@@ -15,23 +15,19 @@
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 >
 
             <TextView
+                    android:id="@+id/project_notice_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="发标预告"
-                    android:id="@+id/project_notice_tv"
-                    android:gravity="center_vertical"
-                    android:background="#dc8d25"
-                    android:textColor="@android:color/white"
-                    android:padding="5dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="14sp"
-                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:text="发标预告"
+                    android:background="#dc8d25"
                     android:drawableLeft="@drawable/icon10"
-                    android:drawableRight="@drawable/right_arrow"
+                    style="@style/MainText"
                     />
 
             <TextView
@@ -41,13 +37,9 @@
                     android:id="@+id/website_notice_view"
                     android:gravity="center_vertical"
                     android:background="#4ca3ab"
-                    android:textColor="@android:color/white"
-                    android:padding="5dp"
-                    android:textSize="14sp"
-                    android:drawablePadding="10dp"
                     android:drawableLeft="@drawable/icon09"
                     android:layout_marginTop="1dp"
-                    android:drawableRight="@drawable/right_arrow"
+                    style="@style/MainText"
                     />
             <TextView
                     android:layout_width="match_parent"
@@ -56,13 +48,9 @@
                     android:id="@+id/signin_tv"
                     android:gravity="center_vertical"
                     android:background="#d35c49"
-                    android:textColor="@android:color/white"
-                    android:padding="5dp"
-                    android:textSize="14sp"
-                    android:drawablePadding="10dp"
                     android:drawableLeft="@drawable/icon08"
                     android:layout_marginTop="10dp"
-                    android:drawableRight="@drawable/right_arrow"
+                    style="@style/MainText"
                     />
             <TextView
                     android:layout_width="match_parent"
@@ -71,13 +59,9 @@
                     android:id="@+id/borrow_tv"
                     android:gravity="center_vertical"
                     android:background="#134d82"
-                    android:textColor="@android:color/white"
-                    android:padding="5dp"
                     android:layout_marginTop="1dp"
-                    android:textSize="14sp"
-                    android:drawablePadding="10dp"
                     android:drawableLeft="@drawable/icon06"
-                    android:drawableRight="@drawable/right_arrow"
+                    style="@style/MainText"
                     />
 
             <TextView
@@ -87,13 +71,9 @@
                     android:id="@+id/account_tv"
                     android:gravity="center_vertical"
                     android:background="#86a639"
-                    android:textColor="@android:color/white"
-                    android:padding="5dp"
-                    android:textSize="14sp"
-                    android:drawablePadding="10dp"
                     android:drawableLeft="@drawable/icon03"
                     android:layout_marginTop="10dp"
-                    android:drawableRight="@drawable/right_arrow"
+                    style="@style/MainText"
                     />
             <TextView
                     android:layout_width="match_parent"
@@ -102,29 +82,9 @@
                     android:id="@+id/discussion_tv"
                     android:gravity="center_vertical"
                     android:background="#134d82"
-                    android:textColor="@android:color/white"
-                    android:padding="5dp"
-                    android:textSize="14sp"
-                    android:drawablePadding="10dp"
                     android:drawableLeft="@drawable/icon04"
                     android:layout_marginTop="1dp"
-                    android:drawableRight="@drawable/right_arrow"
-                    />
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="关于我们"
-                    android:id="@+id/about_tv"
-                    android:gravity="center_vertical"
-                    android:background="#6a309d"
-                    android:textColor="@android:color/white"
-                    android:padding="5dp"
-                    android:textSize="14sp"
-                    android:drawablePadding="10dp"
-                    android:drawableLeft="@drawable/icon05"
-                    android:layout_marginTop="1dp"
-                    android:drawableRight="@drawable/right_arrow"
+                    style="@style/MainText"
                     />
 
         </LinearLayout>

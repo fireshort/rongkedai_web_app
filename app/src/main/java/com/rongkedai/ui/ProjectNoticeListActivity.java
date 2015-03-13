@@ -106,9 +106,6 @@ public class ProjectNoticeListActivity extends ActionBarActivity
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        Intent intent=new Intent(this,TerminalDetailActivity.class);
-//        intent.putExtra("id",id);
-//        startActivity(intent);
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra("url", Urls.PROJECT_NOTICE_DETAIL_WEB + id);
         //intent.putExtra("useWideViewPort", false);

@@ -88,5 +88,6 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'de.greenrobot:eventbus:2.4.0'
+    //compile 'br.com.liveo:navigationdrawer-material:1.0.4'
 
 }
