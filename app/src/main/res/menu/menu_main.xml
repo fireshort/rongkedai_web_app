@@ -2,9 +2,9 @@
       xmlns:tools="http://schemas.android.com/tools"
       xmlns:app="http://schemas.android.com/apk/res-auto"
         >
-    <item android:id="@+id/action_getpocket"
-          android:icon="@drawable/redpocket"
-          android:title="抢红包"
+    <item android:id="@+id/action_rongkebao"
+          android:icon="@drawable/rongkebao"
+          android:title="我的Hi存宝"
           app:showAsAction="ifRoom"/>
     <item android:id="@+id/action_recharge"
           android:icon="@drawable/recharge"
@@ -18,17 +18,17 @@
           android:icon="@drawable/autobid"
           android:title="自动设置"
           app:showAsAction="ifRoom"/>
-    <item android:id="@+id/action_rongkebao"
-          android:icon="@drawable/rongkebao"
-          android:title="我的融科宝"
-          app:showAsAction="ifRoom"/>
     <item android:id="@+id/action_redpocket"
           android:icon="@drawable/redpocket"
           android:title="我的红包"
           app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_getpocket"
+          android:icon="@drawable/redpocket"
+          android:title="抢红包"
+          app:showAsAction="ifRoom"/>
     <item android:id="@+id/action_aboutrkd"
           android:icon="@drawable/icon05"
-          android:title="关于融科贷"
+          android:title="关于Hi投吧"
           app:showAsAction="ifRoom"/>
 
 </menu>

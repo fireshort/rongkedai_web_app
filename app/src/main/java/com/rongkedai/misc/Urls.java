@@ -1,11 +1,8 @@
 package com.rongkedai.misc;
 
-/**
- * Created by DELL on 2015-02-03.
- */
 public class Urls
 {
-    public static final String HOST="https://www.rongkedai.com/";
+    public static final String HOST="http://www.hitouba.com/";
 
     public static final String PROJECT_LIST=HOST+"wapborrow/querywapborrow.jhtml";
 
@@ -36,11 +33,11 @@ public class Urls
     public static final String REDPOCKET_WEB=HOST+"mobile/wap/account/my_redpacket.jsp";
     public static final String GET_REDPOCKET_WEB=HOST+"mobile/wap/redbag/redpacketlist.jsp";
 
-    public static final String AD_PIC_1=HOST+"mobile/wap/assets/images/change/bannner2501.jpg";
-    public static final String AD_PIC_2=HOST+"mobile/wap/assets/images/change/bannner2502.jpg";
-    public static final String AD_PIC_3=HOST+"mobile/wap/assets/images/change/bannner2503.jpg";
-    public static final String AD_PIC_4=HOST+"mobile/wap/assets/images/change/bannner2504.jpg";
-    public static final String AD_PIC_5=HOST+"mobile/wap/assets/images/change/bannner2505.jpg";
+    public static final String AD_PIC_1=HOST+"mobile/wap/assets/images/change/bannner001.jpg";
+    public static final String AD_PIC_2=HOST+"mobile/wap/assets/images/change/bannner002.jpg";
+    public static final String AD_PIC_3=HOST+"mobile/wap/assets/images/change/bannner003.jpg";
+    public static final String AD_PIC_4=HOST+"mobile/wap/assets/images/change/bannner004.jpg";
+//    public static final String AD_PIC_5=HOST+"mobile/wap/assets/images/change/bannner2505.jpg";
 
     public static final String AD_WEB_1=HOST+"wapNewsNotices/newsNotices.jhtml?id=5980";
     public static final String AD_WEB_2=HOST+"mobile/wap/fans/rkd_fans.jsp";

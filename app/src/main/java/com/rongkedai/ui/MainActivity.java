@@ -40,8 +40,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends ActionBarActivity {
-    static String[] adPics = {Urls.AD_PIC_1, Urls.AD_PIC_2, Urls.AD_PIC_3, Urls.AD_PIC_4, Urls.AD_PIC_5};
-    static String[] adWebs = {Urls.AD_WEB_1, Urls.AD_WEB_2, Urls.AD_WEB_3, Urls.AD_WEB_4, Urls.AD_WEB_5};
+    static String[] adPics = {Urls.AD_PIC_1, Urls.AD_PIC_2, Urls.AD_PIC_3, Urls.AD_PIC_4};
+    static String[] adWebs = {Urls.AD_WEB_1, Urls.AD_WEB_2, Urls.AD_WEB_3, Urls.AD_WEB_4};
 
     @InjectView(R.id.ad_is)
     ImageSwitcher adImageSwitcher;
@@ -125,7 +125,7 @@ public class MainActivity extends ActionBarActivity {
                                         L.d("position inside:" + currPos);
                                         intent.putExtra("url", adWebs[currPos]);
                                         L.d("page url:" + adWebs[currPos]);
-                                        startActivity(intent);
+                                        //startActivity(intent);
                                     }
                                 });
                                 position++;
