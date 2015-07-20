@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-import com.rongkedai.R;
+import com.hitouba.R;
 
 
 public class AspectImageView extends ImageView {
