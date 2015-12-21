@@ -30,6 +30,8 @@ public class WebViewActivity extends ActionBarActivity {
 
     private boolean enlargePic = true;
 
+    private boolean hideFooter=false;
+
     private String data = null;
 
     private final WebViewClient mWebViewClient = new WebViewClient() {
@@ -57,11 +59,18 @@ public class WebViewActivity extends ActionBarActivity {
         public void onPageFinished(WebView view, String url) {
             WebViewActivity.this.setProgressBarIndeterminateVisibility(false);
             super.onPageFinished(view, url);
-            String javascript = "javascript:document.getElementsByTagName('footer')[0].style.display = 'none';javascript:document.getElementsByClassName('header')[0].style.display = 'none';javascript:document.getElementsByClassName('banner')[0].style.display = 'none';void(0)";
+            String javascript = "javascript:document.getElementsByClassName('toptitle')[0].style.display = 'none';javascript:document.getElementsByClassName('topdistance')[0].style.display = 'none';void(0)";
             if (enlargePic)
                 javascript = "javascript:var elements=document.getElementsByTagName('img');for(var i=0;i<elements.length;i++)elements[i].onclick=function(){rkd.showImg(this.src);};"
                         + javascript;
-            javascript = "javascript:rkd.settingPageTitle(document.getElementsByClassName('topic')[0].innerText);" + javascript;
+
+            L.d("hideFooter1:"+hideFooter);
+            if(hideFooter)
+                javascript="javascript:document.getElementsByClassName('myfooter')[0].style.display = 'none';javascript:document.getElementsByClassName('spaceheight')[0].style.display = 'none';"
+                        +javascript;
+
+            javascript = "javascript:rkd.settingPageTitle(document.getElementsByClassName('titlefont')[0].innerText);" + javascript;
+            L.d("javascript:"+javascript);
             view.loadUrl(javascript);
             ptrFrame.refreshComplete();
             //getActionBar().setTitle(Setting.pageTitle);
@@ -249,6 +258,8 @@ public class WebViewActivity extends ActionBarActivity {
 
         this.initSettings();
         enlargePic = getIntent().getBooleanExtra("enlargePic", true);
+        hideFooter=getIntent().getBooleanExtra("hideFooter",false);
+        L.d("hideFooter:"+hideFooter);
         String url = getIntent().getStringExtra("url");
         //String url="https://www.rongkedai.com/wapborrow/nav.jhtml";// intent.getStringExtra("url");
         if (!TextUtils.isEmpty(url))

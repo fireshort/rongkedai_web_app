@@ -32,7 +32,8 @@
     </style>
 
     <style name="MainText">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:background">@android:color/white</item>
         <item name="android:padding">5dp</item>
         <item name="android:textSize">14sp</item>
         <item name="android:drawablePadding">10dp</item>

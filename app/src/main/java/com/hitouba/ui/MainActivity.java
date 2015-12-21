@@ -150,7 +150,7 @@ public class MainActivity extends ActionBarActivity {
         }, 0, 4000);
     }
 
-    @OnClick({R.id.borrow_tv, R.id.project_notice_tv, R.id.website_notice_view, R.id.signin_tv, R.id.discussion_tv, R.id.account_tv})
+    @OnClick({R.id.borrow_tv, R.id.capital_record_tv, R.id.hicunbao_tv, R.id.website_notice_view, R.id.signin_tv, R.id.account_tv})
     public void launchActivity(TextView tv) {
         Intent intent;
         switch (tv.getId()) {
@@ -164,8 +164,9 @@ public class MainActivity extends ActionBarActivity {
                 intent.putExtra("url", Urls.WEBSITE_NOTICE_WEB);
                 startActivity(intent);
                 break;
-            case R.id.project_notice_tv:
-                intent = new Intent(this, ProjectNoticeListActivity.class);
+            case R.id.capital_record_tv:
+                intent = new Intent(this, WebViewActivity.class);
+                intent.putExtra("url", Urls.CAPITAL_RECORD_WEB);
                 startActivity(intent);
                 break;
             case R.id.signin_tv:
@@ -174,14 +175,16 @@ public class MainActivity extends ActionBarActivity {
                 intent.putExtra("url", Urls.SIGNIN_WEB);
                 startActivity(intent);
                 break;
-            case R.id.discussion_tv:
-                intent = new Intent(this, WebViewActivity.class);
-                intent.putExtra("url", Urls.DISCUSSION_WEB);
-                startActivity(intent);
-                break;
             case R.id.account_tv:
                 intent = new Intent(this, WebViewActivity.class);
                 intent.putExtra("url", Urls.ACCOUNT_WEB);
+                intent.putExtra("hideFooter",true);
+                startActivity(intent);
+                break;
+            case R.id.hicunbao_tv:
+                intent = new Intent(this, WebViewActivity.class);
+                intent.putExtra("url", Urls.HICUNBAO_WEB);
+                intent.putExtra("hideFooter",false);
                 startActivity(intent);
                 break;
 
@@ -221,15 +224,12 @@ public class MainActivity extends ActionBarActivity {
             case R.id.action_auto_bid:
                 intent.putExtra("url", Urls.AUTO_BID_WEB);
                 break;
-            case R.id.action_rongkebao:
-                intent.putExtra("url", Urls.RONGKEBAO_WEB);
-                break;
-            case R.id.action_redpocket:
-                intent.putExtra("url", Urls.REDPOCKET_WEB);
-                break;
-            case R.id.action_getpocket:
-                intent.putExtra("url", Urls.GET_REDPOCKET_WEB);
-                break;
+//            case R.id.action_redpocket:
+//                intent.putExtra("url", Urls.REDPOCKET_WEB);
+//                break;
+//            case R.id.action_getpocket:
+//                intent.putExtra("url", Urls.GET_REDPOCKET_WEB);
+//                break;
             case R.id.action_aboutrkd:
                 intent.putExtra("url", Urls.ABOUT_US_WEB);
                 break;

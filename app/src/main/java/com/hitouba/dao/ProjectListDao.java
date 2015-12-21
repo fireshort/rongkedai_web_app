@@ -29,7 +29,7 @@ public class ProjectListDao extends AbsDao<ArrayList<ProjectBean>>
     @Override
     protected ArrayList<ProjectBean> parse(JSONObject response) throws JSONException
     {
-        JSONArray array=response.getJSONArray("result");
+        JSONArray array=response.getJSONArray("data");
         ArrayList<ProjectBean> list=new ArrayList<ProjectBean>(array.length());
         for(int i=0; i<array.length(); i++)
         {
