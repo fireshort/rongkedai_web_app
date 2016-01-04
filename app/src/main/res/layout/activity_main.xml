@@ -25,7 +25,7 @@
                     android:text="最新活动"
                     android:id="@+id/website_notice_view"
                     android:drawableLeft="@drawable/found_icon_9"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="15dp"
                     style="@style/MainText"
                     />
             <TextView
@@ -34,7 +34,7 @@
                     android:text="天天签到"
                     android:id="@+id/signin_tv"
                     android:drawableLeft="@drawable/found_icon_6"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="15dp"
                     style="@style/MainText"
                     />
             <TextView
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:text="Hi贷宝"
                     android:id="@+id/borrow_tv"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="15dp"
                     android:drawableLeft="@drawable/found_icon_3"
                     style="@style/MainText"
                     />
@@ -60,7 +60,7 @@
                     android:id="@+id/capital_record_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="15dp"
                     android:text="投资记录"
                     android:drawableLeft="@drawable/found_icon_2"
                     style="@style/MainText"
